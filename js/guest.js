@@ -105,7 +105,7 @@
       photoPreview.hidden = true;
     }
 
-    photoInput.addEventListener("change", () => {
+    photoInput.addEventListener("change", async () => {
       const file = photoInput.files[0];
       clearErrors();
       if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -113,17 +113,22 @@
       photoPreviewImage.removeAttribute("src");
       photoPreview.hidden = true;
       if (!file) return;
-      if (!/image\/(jpeg|jpg|png|webp)/i.test(file.type)) {
+      const isImg = (file.type || "").startsWith("image/") || /\.(jpe?g|png|webp|heic|heif|gif|bmp|tiff)$/i.test(file.name || "");
+      if (!isImg) {
         showFieldError("gPhoto", t("guest.errorPhotoType"));
         return;
       }
-      if (file.size > 8 * 1024 * 1024) {
+      if (file.size > 12 * 1024 * 1024) {
         showFieldError("gPhoto", t("guest.errorPhotoSize"));
         return;
       }
-      previewUrl = URL.createObjectURL(file);
-      photoPreviewImage.src = previewUrl;
-      photoPreview.hidden = false;
+      try {
+        previewUrl = URL.createObjectURL(file);
+        photoPreviewImage.src = previewUrl;
+        photoPreview.hidden = false;
+      } catch (e) {
+        /* silent fallback if preview fails */
+      }
     });
 
     form.addEventListener("submit", async (e) => {

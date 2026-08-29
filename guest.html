@@ -53,10 +53,10 @@
       <div class="form-field">
         <label for="gPhoto" data-i18n="guest.photoLabel">Photo</label>
         <label class="upload-photo-control" for="gPhoto"><span data-i18n="guest.addPhotoBtn">&#128247; Add Photo</span></label>
-        <input class="visually-hidden" type="file" id="gPhoto" accept="image/jpeg,image/png,image/webp" aria-describedby="gPhotoError" required>
+        <input class="visually-hidden" type="file" id="gPhoto" accept="image/*,.heic,.heif" aria-describedby="gPhotoError" required>
         <div class="photo-preview" id="gPhotoPreview" hidden><img id="gPhotoPreviewImage" alt="Selected memory photo preview"></div>
         <p class="field-error" id="gPhotoError" aria-live="polite"></p>
-        <p class="form-note" data-i18n="guest.photoNote">Under 8MB &mdash; JPG, PNG, or WebP.</p>
+        <p class="form-note" data-i18n="guest.photoNote">Photos from phone, tablet, or PC (JPG, PNG, WebP, HEIC/HEIF).</p>
       </div>
 
       <button type="submit" class="btn-gold guest-submit" data-i18n="guest.submitBtn">Submit Memory</button>

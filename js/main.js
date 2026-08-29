@@ -1251,7 +1251,7 @@
       });
     }
 
-    $("#memImage").addEventListener("change", () => {
+    $("#memImage").addEventListener("change", async () => {
       const file = $("#memImage").files[0];
       clearUploadErrors();
       if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -1259,17 +1259,22 @@
       photoPreviewImage.removeAttribute("src");
       photoPreview.hidden = true;
       if (!file) return;
-      if (!/image\/(jpeg|jpg|png|webp)/i.test(file.type)) {
-        showFieldError("memImage", "Choose a JPG, PNG, or WebP image.");
+      const isImg = (file.type || "").startsWith("image/") || /\.(jpe?g|png|webp|heic|heif|gif|bmp|tiff)$/i.test(file.name || "");
+      if (!isImg) {
+        showFieldError("memImage", "Please select a valid photo (JPG, PNG, WebP, HEIC/HEIF).");
         return;
       }
-      if (file.size > 8 * 1024 * 1024) {
-        showFieldError("memImage", "Photo must be 8MB or smaller.");
+      if (file.size > 12 * 1024 * 1024) {
+        showFieldError("memImage", "Photo must be 12MB or smaller.");
         return;
       }
-      previewUrl = URL.createObjectURL(file);
-      photoPreviewImage.src = previewUrl;
-      photoPreview.hidden = false;
+      try {
+        previewUrl = URL.createObjectURL(file);
+        photoPreviewImage.src = previewUrl;
+        photoPreview.hidden = false;
+      } catch (e) {
+        /* silent fallback if preview fails */
+      }
     });
 
     uploadForm.addEventListener("submit", async (e) => {
