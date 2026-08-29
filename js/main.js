@@ -1638,7 +1638,7 @@
     async function shareCurrentPhoto() {
       if (!currentLightboxPhoto) return;
       const m = currentLightboxPhoto;
-      const shareTitle = "Alyiah Jasmine — Memory";
+      const shareTitle = "Aliyah Jasmine — Memory";
       const shareText = m.name + (m.caption ? ": " + m.caption : "");
 
       /* 1) Best case: share the actual photo file via the native share

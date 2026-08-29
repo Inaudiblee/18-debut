@@ -1,4 +1,4 @@
-ALYIAH JASMINE — EIGHTEENTH DEBUT
+Aliyah JASMINE — EIGHTEENTH DEBUT
 ==================================
 
 FOLDER STRUCTURE
@@ -75,7 +75,7 @@ THE 9 CHAPTERS
 18 WISHES & PRAYERS (new)
 ---------------------------
 Sits right before 18 Bills. Each of the 18 roses stands for one
-person — tap a rose to reveal their wish or prayer for Alyiah
+person — tap a rose to reveal their wish or prayer for Aliyah
 Jasmine, the same way candles and treasures work. Edit the
 placeholder text in the wishesData list in js/main.js.
 

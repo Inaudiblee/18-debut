@@ -32,7 +32,7 @@
 
       "hero.turns": "turns",
       "hero.eighteen": "eighteen",
-      "invite.line": "Join us to celebrate as Alyiah Jasmine turns eighteen.",
+      "invite.line": "Join us to celebrate as Aliyah Jasmine turns eighteen.",
       "invite.time": "Six o'clock in the evening",
       "invite.venue": "Baytown Clubhouse — Habay 1, Bacoor, Cavite",
       "invite.cordial": "You are cordially invited",
@@ -40,7 +40,7 @@
 
       "letter.kicker": "Dear Guest,",
       "letter.body1": "Some birthdays are simply celebrated. Others mark the beginning of something new — a little more poise, a little more grace, and the woman she is becoming.",
-      "letter.body2": "On the fifth of September, we open our doors and our hearts as Alyiah Jasmine turns eighteen. There will be candlelight, laughter, treasured company, and a great deal of joy.",
+      "letter.body2": "On the fifth of September, we open our doors and our hearts as Aliyah Jasmine turns eighteen. There will be candlelight, laughter, treasured company, and a great deal of joy.",
       "letter.body3": "We would be so glad if you could be part of it.",
       "letter.question": "Will you join us?",
 
@@ -158,7 +158,7 @@
       "guest.addAnotherBtn": "Share another memory",
 
       "messages.eyebrow": "08 — Messages",
-      "messages.title": "A Message For Alyiah",
+      "messages.title": "A Message For Aliyah",
       "messages.nameLabel": "Your Name",
       "messages.textLabel": "Your Message",
       "messages.submitBtn": "Leave A Message",
@@ -172,7 +172,7 @@
       "goodbye.msg": "Thank you for being part of this special chapter. Every candle, every treasure, every wish, every message — it all means more than words can hold.",
       "goodbye.replayBtn": "Replay the Invitation",
 
-      "langgate.mark": "Alyiah Jasmine",
+      "langgate.mark": "Aliyah Jasmine",
       "langgate.title": "Choose Your Language",
       "langgate.sub": "Piliin ang iyong wika para sa paanyaya",
       "langgate.english": "English",
@@ -210,7 +210,7 @@
 
       "hero.turns": "sumasapit sa",
       "hero.eighteen": "kabataang labingwalo",
-      "invite.line": "Sumama sa amin sa pagdiriwang habang si Alyiah Jasmine ay sumasapit sa kanyang ika-labingwalong kaarawan.",
+      "invite.line": "Sumama sa amin sa pagdiriwang habang si Aliyah Jasmine ay sumasapit sa kanyang ika-labingwalong kaarawan.",
       "invite.time": "Alas-sais ng gabi",
       "invite.venue": "Baytown Clubhouse — Habay 1, Bacoor, Cavite",
       "invite.cordial": "Kayo ay lubos na inaanyayahan",
@@ -218,7 +218,7 @@
 
       "letter.kicker": "Mahal naming Panauhin,",
       "letter.body1": "May mga kaarawang ipinagdiriwang lamang. May mga kaarawan namang tanda ng simula ng bago — mas may dignidad, mas may kagandahang-loob, at ang babaeng kanyang nararapat maging.",
-      "letter.body2": "Sa ikalimang araw ng Setyembre, bubuksan namin ang aming pinto at puso habang si Alyiah Jasmine ay sumasapit sa labingwalo. Magkakaroon ng ilaw ng kandila, tawanan, mahalagang kasama, at kasiyahang walang hanggan.",
+      "letter.body2": "Sa ikalimang araw ng Setyembre, bubuksan namin ang aming pinto at puso habang si Aliyah Jasmine ay sumasapit sa labingwalo. Magkakaroon ng ilaw ng kandila, tawanan, mahalagang kasama, at kasiyahang walang hanggan.",
       "letter.body3": "Ikagagalak naming malaman na kayo ay makakasama.",
       "letter.question": "Sasama ba kayo?",
 
@@ -336,7 +336,7 @@
       "guest.addAnotherBtn": "Magbahagi ng isa pang alaala",
 
       "messages.eyebrow": "08 — Mga Mensahe",
-      "messages.title": "Isang Mensahe Para Kay Alyiah",
+      "messages.title": "Isang Mensahe Para Kay Aliyah",
       "messages.nameLabel": "Iyong Pangalan",
       "messages.textLabel": "Iyong Mensahe",
       "messages.submitBtn": "Mag-iwan Ng Mensahe",
@@ -350,7 +350,7 @@
       "goodbye.msg": "Salamat sa pagiging bahagi ng natatanging kabanatang ito. Bawat kandila, bawat kayamanan, bawat hiling, bawat mensahe — higit pa ito sa masasabi ng mga salita.",
       "goodbye.replayBtn": "I-replay ang Paanyaya",
 
-      "langgate.mark": "Alyiah Jasmine",
+      "langgate.mark": "Aliyah Jasmine",
       "langgate.title": "Piliin ang Wika",
       "langgate.sub": "Choose your language for the invitation",
       "langgate.english": "English",
