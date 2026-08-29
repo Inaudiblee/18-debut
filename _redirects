@@ -1,0 +1,2 @@
+# Backup Netlify redirects
+/api/store.php /.netlify/functions/store 200

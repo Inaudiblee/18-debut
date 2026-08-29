@@ -1,0 +1,87 @@
+/* ============================================================
+   guest.css
+   Styles specific to the standalone QR guest-submission page
+   (guest.html). Loaded after css/style.css so it can reuse the
+   same design tokens, fonts, and shared components (.btn-gold,
+   .btn-ghost, .form-field, .field-error, .upload-photo-control,
+   .photo-preview, .modal-eyebrow, .form-note, .form-status)
+   without duplicating them — this file only resets the handful
+   of base rules that assume the full scroll-snap chapter site
+   and adds the simple single-card layout this page needs.
+   ============================================================ */
+
+/* style.css sets body{overflow:hidden;height:100vh} for the
+   snap-scrolling invitation. This page is a normal, short,
+   scrollable single view, so undo that here. */
+html,body.guest-body{
+  height:auto;min-height:100vh;min-height:100dvh;
+  overflow:auto;
+  width:100%;
+}
+
+.guest-page{
+  position:relative;z-index:1;
+  min-height:100vh;min-height:100dvh;
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(env(safe-area-inset-top,0px) + 28px) 16px calc(env(safe-area-inset-bottom,0px) + 28px);
+}
+
+.guest-card{
+  position:relative;
+  width:100%;max-width:420px;
+  background:linear-gradient(180deg, rgba(38,8,14,.92), rgba(26,5,9,.96));
+  border:1px solid var(--gold-deep);
+  box-shadow:0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(201,167,101,.12) inset;
+  border-radius:4px;
+  padding:34px 26px 30px;
+  text-align:center;
+}
+
+.guest-lang{
+  position:absolute;top:14px;right:14px;
+  display:flex;gap:4px;
+}
+.guest-lang-btn{
+  font-family:var(--font-title);letter-spacing:.08em;font-size:.68rem;
+  color:rgba(236,220,185,.6);
+  padding:.35em .6em;border:1px solid rgba(201,167,101,.35);border-radius:2px;
+  transition:color .25s ease,border-color .25s ease,background .25s ease;
+}
+.guest-lang-btn:hover{color:var(--gold-light);border-color:var(--gold-light);}
+.guest-lang-btn.active{color:var(--ink);background:linear-gradient(180deg,var(--gold-light),var(--gold) 70%);border-color:transparent;}
+
+.guest-card .modal-eyebrow{margin-top:6px;}
+.guest-title{
+  font-family:var(--font-display);font-style:italic;font-weight:600;
+  font-size:clamp(1.35rem,6vw,1.75rem);
+  color:var(--gold-light);
+  margin:.15em 0 1.3em;
+  line-height:1.3;
+}
+
+.guest-form .form-field{text-align:left;}
+.guest-submit{width:100%;margin-top:.4em;}
+
+.guest-thanks{padding:14px 0 4px;}
+.guest-thanks-mark{
+  font-size:2.4rem;color:var(--gold-light);
+  margin-bottom:.4em;
+  animation:guestHeartPulse 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .guest-thanks-mark{animation:none;}
+}
+@keyframes guestHeartPulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.12);}
+}
+.guest-thanks-title{
+  font-family:var(--font-display);font-style:italic;
+  font-size:1.15rem;line-height:1.5;
+  color:var(--champagne);
+  margin-bottom:1.4em;
+}
+
+@media (max-width:420px){
+  .guest-card{padding:30px 18px 26px;}
+}
