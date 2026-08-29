@@ -961,15 +961,16 @@
       const fig = document.createElement("figure");
       fig.className = "polaroid" + (shouldAnimate ? " polaroid--entering" : "");
       fig.style.setProperty("--rot", (Number(m.id) % 5) - 2 + "deg");
+      const captionText = m.caption || m.message || "";
       const img = m.image
-        ? `<img class="ph" src="${m.image}" alt="${escapeHtml(m.caption || "A memory photo")}">`
+        ? `<img class="ph" src="${escapeHtml(m.image)}" alt="${escapeHtml(captionText || "A memory photo")}" onerror="this.onerror=null; this.outerHTML='<div class=&quot;ph-placeholder&quot;>&#10022;</div>';">`
         : `<div class="ph-placeholder">&#10022;</div>`;
       if (m.image) {
         fig.tabIndex = 0;
         fig.setAttribute("role", "button");
         fig.setAttribute("aria-label", (t("lightbox.viewAria") || "View photo from") + " " + m.name);
       }
-      fig.innerHTML = `${img}<figcaption><span class="p-name">${escapeHtml(m.name)}</span><span class="p-caption">${escapeHtml(m.caption || "")}</span></figcaption>`;
+      fig.innerHTML = `${img}<figcaption><span class="p-name">${escapeHtml(m.name)}</span><span class="p-caption">${escapeHtml(captionText)}</span></figcaption>`;
       return fig;
     }
 
@@ -1116,13 +1117,18 @@
     });
 
     async function loadMemories() {
+      if (window.MemoryUploadService && typeof window.MemoryUploadService.fetchMemories === "function") {
+        const remoteData = await window.MemoryUploadService.fetchMemories();
+        if (Array.isArray(remoteData)) {
+          memories = remoteData;
+          renderMemories();
+          return;
+        }
+      }
       const data = await storageGet("memories", true);
       if (Array.isArray(data) && data.length > 0) {
         memories = data;
-        /* Keep local copy in sync with shared storage */
-        saveMemoriesLocally(memories);
       } else {
-        /* Fall back to localStorage when shared storage is unavailable */
         memories = loadMemoriesLocally();
       }
       renderMemories();
@@ -1294,23 +1300,21 @@
       status.textContent = t("memories.savingMsg") || "Adding your memory\u2026";
 
       try {
-        const image = await resizeImage(file);
-        const memory = { id: Date.now(), name, caption, image };
-        const ok = await storageAppend("memories", memory, true);
-        memories = memories.concat(memory);
-        saveMemoriesLocally(memories);
-        renderMemories({ gotoLastPage: true, transition: true, highlightNew: true });
-
-        if (ok) {
-          status.textContent = t("memories.successMsg") || "Memory added \u2014 thank you!";
-        } else {
-          status.textContent = t("memories.savedLocalMsg") || "Saved for this visit (couldn\u2019t reach shared storage).";
+        if (!window.MemoryUploadService || typeof window.MemoryUploadService.uploadMemory !== "function") {
+          throw new Error("Upload service is unavailable.");
         }
-
-        uploadTimer = setTimeout(() => {
-          uploadTimer = null;
-          closeUploadModal();
-        }, 1400);
+        const res = await window.MemoryUploadService.uploadMemory({ name, caption, file });
+        if (res && res.success && res.memory) {
+          memories = memories.concat(res.memory);
+          renderMemories({ gotoLastPage: true, transition: true, highlightNew: true });
+          status.textContent = t("memories.successMsg") || "Memory added \u2014 thank you!";
+          uploadTimer = setTimeout(() => {
+            uploadTimer = null;
+            closeUploadModal();
+          }, 1400);
+        } else {
+          throw new Error("Upload failed. Please try again.");
+        }
       } catch (err) {
         status.textContent = err.message || "Something went wrong. Please try again.";
         isSubmittingMemory = false;

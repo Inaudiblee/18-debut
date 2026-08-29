@@ -152,29 +152,16 @@
       status.textContent = t("guest.savingMsg");
 
       try {
-        const image = await resizeImage(file);
-        const memory = { id: Date.now(), name, caption: message, image };
-        const ok = window.AJStorage
-          ? await window.AJStorage.storageAppend("memories", memory, true)
-          : false;
-
-        if (!ok) {
-          /* Shared storage (window.storage / api/store.php) wasn't
-             reachable — e.g. this page was opened straight from the
-             filesystem, or the host's PHP isn't set up yet (see
-             README.txt). The memory is NOT silently dropped-looking:
-             tell the guest plainly so they (or the couple) know to
-             check the connection, rather than showing a false
-             success. No local-only fallback here, unlike the on-site
-             modal — this page has no "wall" of its own to show it on. */
-          status.textContent = t("guest.savedLocalMsg");
-          isSubmitting = false;
-          if (submitBtn) submitBtn.disabled = false;
-          return;
+        if (!window.MemoryUploadService || typeof window.MemoryUploadService.uploadMemory !== "function") {
+          throw new Error(t("guest.errorGeneric"));
         }
-
-        form.hidden = true;
-        thanks.hidden = false;
+        const res = await window.MemoryUploadService.uploadMemory({ name, caption: message, file });
+        if (res && res.success) {
+          form.hidden = true;
+          thanks.hidden = false;
+        } else {
+          throw new Error(t("guest.errorGeneric"));
+        }
       } catch (err) {
         status.textContent = err.message || t("guest.errorGeneric");
         isSubmitting = false;
