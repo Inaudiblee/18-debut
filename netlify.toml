@@ -1,0 +1,63 @@
+# ============================================================
+#  netlify.toml
+#  Netlify configuration for Aliyah Jasmine Debut Website
+#
+#  This is a fully static site (HTML + CSS + JS + assets).
+#  No build step required — Netlify publishes the root folder as-is.
+#
+#  Supabase environment variables go in:
+#    Netlify Dashboard → Site → Environment variables
+#  Do NOT put real secret values in this file.
+#
+#  Required when Supabase is connected:
+#    VITE_SUPABASE_URL      = https://xxxx.supabase.co
+#    VITE_SUPABASE_ANON_KEY = eyJ...  (anon/public key only)
+#
+#  ⚠️  NEVER put SUPABASE_SERVICE_ROLE_KEY in any client-side file.
+# ============================================================
+
+[build]
+  # Pure static site — no build command needed.
+  publish = "."
+  command = ""
+  functions = "netlify/functions"
+
+# ── Redirects ────────────────────────────────────────────────
+# Route the PHP flat-file API to a Netlify serverless function.
+# The function has the same request/response contract as store.php
+# (GET ?action=get&key=..., POST {action,key,value}) so storage.js
+# works without any changes.
+
+[[redirects]]
+  from   = "/api/store.php"
+  to     = "/.netlify/functions/store"
+  status = 200
+
+# ── Security headers ─────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pixell/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+

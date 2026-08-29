@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Share a Memory — Aliyah Jasmine's Debut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<!-- Reuses the main site's design tokens + shared components (.btn-gold,
+     .form-field, .field-error, .upload-photo-control, .photo-preview...)
+     so this page matches the invitation without duplicating that CSS.
+     guest.css resets the parts of style.css that assume the full
+     scroll-snap chapter site (body{overflow:hidden;height:100vh} etc.)
+     and adds the layout for this standalone card page. -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/guest.css">
+</head>
+<body class="guest-body">
+
+<div class="satin-bg" aria-hidden="true">
+  <div class="satin-base"></div>
+  <div class="satin-sheen"></div>
+  <div class="satin-vignette"></div>
+  <div class="satin-grain"></div>
+</div>
+
+<main class="guest-page">
+  <div class="guest-card">
+
+    <div class="guest-lang" role="group" aria-label="Language / Wika">
+      <button type="button" class="guest-lang-btn" data-lang="en">EN</button>
+      <button type="button" class="guest-lang-btn" data-lang="fil">FIL</button>
+    </div>
+
+    <p class="modal-eyebrow" data-i18n="guest.eyebrow">A Wall of Moments</p>
+    <h1 class="guest-title" data-i18n="guest.title">Share a memory with us &#10084;</h1>
+
+    <!-- FORM VIEW -->
+    <form id="guestForm" class="guest-form" novalidate>
+      <div class="form-field">
+        <label for="gName" data-i18n="guest.nameLabel">Your Name</label>
+        <input type="text" id="gName" maxlength="60" autocomplete="name" placeholder="Your Name" aria-describedby="gNameError" required>
+        <p class="field-error" id="gNameError" aria-live="polite"></p>
+      </div>
+
+      <div class="form-field">
+        <label for="gMessage" data-i18n="guest.messageLabel">Your Message</label>
+        <textarea id="gMessage" maxlength="500" data-i18n-placeholder="guest.messagePlaceholder" placeholder="Write something about this memory…" aria-describedby="gMessageError" required></textarea>
+        <p class="field-error" id="gMessageError" aria-live="polite"></p>
+      </div>
+
+      <div class="form-field">
+        <label for="gPhoto" data-i18n="guest.photoLabel">Photo</label>
+        <label class="upload-photo-control" for="gPhoto"><span data-i18n="guest.addPhotoBtn">&#128247; Add Photo</span></label>
+        <input class="visually-hidden" type="file" id="gPhoto" accept="image/*,.heic,.heif" aria-describedby="gPhotoError" required>
+        <div class="photo-preview" id="gPhotoPreview" hidden><img id="gPhotoPreviewImage" alt="Selected memory photo preview"></div>
+        <p class="field-error" id="gPhotoError" aria-live="polite"></p>
+        <p class="form-note" data-i18n="guest.photoNote">Photos from phone, tablet, or PC (JPG, PNG, WebP, HEIC/HEIF).</p>
+      </div>
+
+      <button type="submit" class="btn-gold guest-submit" data-i18n="guest.submitBtn">Submit Memory</button>
+      <p class="form-status" id="guestStatus" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- THANK-YOU VIEW -->
+    <div class="guest-thanks" id="guestThanks" hidden>
+      <div class="guest-thanks-mark" aria-hidden="true">&#10084;</div>
+      <p class="guest-thanks-title" data-i18n="guest.thankYouTitle">Thank you for sharing a memory with us &#10084;</p>
+      <button type="button" class="btn-ghost small" id="guestAddAnother" data-i18n="guest.addAnotherBtn">Share another memory</button>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/i18n.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/upload-service.js"></script>
+<script src="js/guest.js"></script>
+</body>
+</html>

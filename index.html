@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Aliyah Jasmine — Eighteenth Debut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-gated">
+
+<!-- ============ LANGUAGE GATE (pre-loading localization) ============ -->
+<div class="lang-gate" id="langGate">
+  <div class="lang-gate-card">
+    <p class="lang-gate-mark">Aliyah Jasmine</p>
+    <h1 class="lang-gate-title">Choose Your Language<br>Piliin ang Wika</h1>
+    <p class="lang-gate-sub">Select a language for the invitation · Pumili ng wika para sa paanyaya</p>
+    <div class="lang-gate-options">
+      <button type="button" class="lang-option" data-lang-choice="en">
+        <span class="lang-flag">Aa</span>
+        <span class="lang-name">English</span>
+      </button>
+      <button type="button" class="lang-option" data-lang-choice="fil">
+        <span class="lang-flag">Aa</span>
+        <span class="lang-name">Filipino</span>
+      </button>
+    </div>
+    <p class="lang-gate-foot">You can switch languages anytime from the top menu.</p>
+  </div>
+</div>
+
+<!-- ============ PRELOADER (only appears if loading is slow) ============ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader-inner">
+    <div class="preloader-ring"></div>
+    <p class="preloader-label" data-i18n="preloader.label">Preparing your invitation…</p>
+  </div>
+</div>
+
+<div class="satin-bg" aria-hidden="true">
+  <div class="satin-base"></div>
+  <div class="satin-sheen"></div>
+  <div class="satin-grain"></div>
+  <div class="satin-vignette"></div>
+</div>
+
+<nav class="chapter-nav" aria-label="Chapters">
+  <span class="brand-mark">Aliyah Jasmine</span>
+  <ol class="nav-list" id="navList">
+    <li><button class="nav-link" data-goto="invitation"><span class="nav-num">01</span><span data-i18n="nav.invitation">Invitation</span></button></li>
+    <li><button class="nav-link" data-goto="celebration"><span class="nav-num">02</span><span data-i18n="nav.celebration">Celebration</span></button></li>
+    <li><button class="nav-link" data-goto="candles"><span class="nav-num">03</span><span data-i18n="nav.candles">18 Roses</span></button></li>
+    <li><button class="nav-link" data-goto="treasures"><span class="nav-num">04</span><span data-i18n="nav.treasures">18 Treasures</span></button></li>
+    <li><button class="nav-link" data-goto="wishes"><span class="nav-num">05</span><span data-i18n="nav.wishes">18 Wishes &amp; Prayers</span></button></li>
+    <li><button class="nav-link" data-goto="bills"><span class="nav-num">06</span><span data-i18n="nav.bills">18 Bills</span></button></li>
+    <li><button class="nav-link" data-goto="memories"><span class="nav-num">07</span><span data-i18n="nav.memories">Memories</span></button></li>
+    <li><button class="nav-link" data-goto="messages"><span class="nav-num">08</span><span data-i18n="nav.messages">Messages</span></button></li>
+    <li><button class="nav-link" data-goto="goodbye"><span class="nav-num">09</span><span data-i18n="nav.goodbye">Goodbye</span></button></li>
+  </ol>
+  <div class="nav-lang" aria-label="Language">
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="fil">FIL</button>
+  </div>
+  <button type="button" class="nav-music" id="musicToggle" data-i18n-aria="music.playAria" aria-label="Toggle background music">
+    <svg class="icon-playing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>
+    <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/><path d="M2 2l20 20" stroke="#e6cd93"/></svg>
+  </button>
+  <!-- Mobile-only hamburger toggle. Hidden on desktop/tablet; shown under
+       the mobile nav breakpoint in style.css (same breakpoint that hides
+       .nav-list). Opens #mobileNavPanel, a dropdown reusing the same
+       [data-goto] buttons/i18n keys as the desktop nav-list below, so
+       clicks route through the existing delegated click handler in
+       main.js with no duplicate navigation logic. -->
+  <button type="button" class="nav-burger" id="navBurger" data-i18n-aria="nav.menuAria" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavPanel">
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+  </button>
+</nav>
+
+<!-- Mobile navigation dropdown + backdrop. Desktop/tablet: never shown
+     (display:none outside the mobile breakpoint). Mobile: toggled open/
+     closed by #navBurger via main.js, which just adds/removes the
+     .is-open class and lets the existing document-level [data-goto]
+     click handler perform the actual chapter navigation. -->
+<div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+<div class="mobile-nav" id="mobileNavPanel" aria-hidden="true">
+  <div class="mobile-nav-inner">
+    <p class="mobile-nav-brand">Aliyah Jasmine</p>
+    <ol class="mobile-nav-list">
+      <li><button class="nav-link" data-goto="invitation"><span class="nav-num">01</span><span data-i18n="nav.invitation">Invitation</span></button></li>
+      <li><button class="nav-link" data-goto="celebration"><span class="nav-num">02</span><span data-i18n="nav.celebration">Celebration</span></button></li>
+      <li><button class="nav-link" data-goto="candles"><span class="nav-num">03</span><span data-i18n="nav.candles">18 Roses</span></button></li>
+      <li><button class="nav-link" data-goto="treasures"><span class="nav-num">04</span><span data-i18n="nav.treasures">18 Treasures</span></button></li>
+      <li><button class="nav-link" data-goto="wishes"><span class="nav-num">05</span><span data-i18n="nav.wishes">18 Wishes &amp; Prayers</span></button></li>
+      <li><button class="nav-link" data-goto="bills"><span class="nav-num">06</span><span data-i18n="nav.bills">18 Bills</span></button></li>
+      <li><button class="nav-link" data-goto="memories"><span class="nav-num">07</span><span data-i18n="nav.memories">Memories</span></button></li>
+      <li><button class="nav-link" data-goto="messages"><span class="nav-num">08</span><span data-i18n="nav.messages">Messages</span></button></li>
+      <li><button class="nav-link" data-goto="goodbye"><span class="nav-num">09</span><span data-i18n="nav.goodbye">Goodbye</span></button></li>
+    </ol>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ============ CHAPTER 01 — INVITATION ============ -->
+  <section class="chapter" id="chapter-invitation" data-chapter="invitation">
+    <div class="floral-frame" aria-hidden="true">
+      <svg class="corner c-tl"><use href="#floral-corner"/></svg>
+      <svg class="corner c-tr"><use href="#floral-corner"/></svg>
+      <svg class="corner c-bl"><use href="#floral-corner"/></svg>
+      <svg class="corner c-br"><use href="#floral-corner"/></svg>
+    </div>
+    <div class="invite-scene">
+
+      <div class="intro-stage" id="introStage">
+        <h1 class="hero-name">
+          <span class="line"><span>Aliyah</span></span>
+          <span class="line"><span>JASMINE</span></span>
+        </h1>
+        <p class="hero-turns"><span data-i18n="hero.turns">turns</span> <span class="hero-18" data-i18n="hero.eighteen">eighteen</span></p>
+        <div class="intro-details">
+          <p class="invite-line" data-i18n="invite.line">Join us to celebrate as Aliyah Jasmine turns eighteen.</p>
+          <p class="invite-date">09 . 05 . 2026</p>
+          <p class="invite-meta" data-i18n="invite.time">Six o'clock in the evening</p>
+          <p class="invite-meta" data-i18n="invite.venue">Baytown Clubhouse — Habay 1, Bacoor, Cavite</p>
+        </div>
+        <div class="intro-continue" id="introContinue">
+          <button type="button" class="btn-ghost" id="introContinueBtn">Continue &rarr;</button>
+        </div>
+      </div>
+
+      <div class="envelope-stage" id="envelopeStage">
+        <p class="eyebrow" data-i18n="invite.cordial">You are cordially invited</p>
+        <div class="envelope-wrap">
+          <button class="envelope" id="envelopeBtn" data-i18n-aria="invite.tapHint" aria-label="Open the invitation letter">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-seal" aria-hidden="true">AJ</div>
+          </button>
+        </div>
+        <p class="tap-hint" data-i18n="invite.tapHint">Open the Invitation</p>
+      </div>
+
+      <div class="letter-stage" id="letterStage" hidden>
+        <div class="letter-card">
+          <p class="letter-kicker" data-i18n="letter.kicker">Dear Guest,</p>
+          <p class="letter-body" data-i18n="letter.body1">Some birthdays are simply celebrated. Others mark the beginning of something new — a little more poise, a little more grace, and the woman she is becoming.</p>
+          <p class="letter-body" data-i18n="letter.body2">On the fifth of September, we open our doors and our hearts as Aliyah Jasmine turns eighteen. There will be candlelight, laughter, treasured company, and a great deal of joy.</p>
+          <p class="letter-body" data-i18n="letter.body3">We would be so glad if you could be part of it.</p>
+          <p class="letter-question" data-i18n="letter.question">Will you join us?</p>
+
+          <div class="rsvp-name-field">
+            <label for="rsvpName" data-i18n="rsvp.nameLabel">Your Full Name</label>
+            <input type="text" id="rsvpName" maxlength="80" autocomplete="name" data-i18n-placeholder="rsvp.namePlaceholder" placeholder="e.g. Maria Dela Cruz">
+            <p class="rsvp-name-hint" data-i18n="rsvp.nameHint">Please write your full name so we can find you on the guest list.</p>
+          </div>
+
+          <div class="rsvp-row">
+            <button class="btn-gold" id="rsvpYes" data-i18n="rsvp.yesBtn" disabled>Yes, I'll Be There</button>
+            <button class="btn-ghost" id="rsvpMaybe" data-i18n="rsvp.maybeBtn">Maybe — Not Yet Sure</button>
+          </div>
+
+          <div class="rsvp-divider"><span data-i18n="rsvp.or">or</span></div>
+
+          <div class="rsvp-listed">
+            <button class="btn-ghost small" id="rsvpAlready" data-i18n="rsvp.alreadyBtn">I'm Already On The List</button>
+          </div>
+
+          <p class="rsvp-response" id="rsvpResponse" hidden></p>
+          <div class="rsvp-continue" id="rsvpContinue" hidden>
+            <button class="btn-gold" id="rsvpContinueBtn" data-i18n="rsvp.continueBtn">Continue to the Celebration →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 02 — CELEBRATION ============ -->
+  <section class="chapter" id="chapter-celebration" data-chapter="celebration">
+    <div class="chapter-inner">
+      <div class="chapter-head">
+        <span class="eyebrow" data-i18n="celebration.eyebrow">02 — The Celebration</span>
+        <h2 class="chapter-title" data-i18n="celebration.title">Details of the Evening</h2>
+      </div>
+
+      <div class="celebration-grid">
+        <div class="detail-card"><h3 data-i18n="detail.dateLabel">Date</h3><p data-i18n="detail.dateValue">September 5, 2026</p></div>
+        <div class="detail-card"><h3 data-i18n="detail.timeLabel">Time</h3><p data-i18n="detail.timeValue">Six in the Evening</p></div>
+        <div class="detail-card map-card">
+          <h3 data-i18n="detail.locationLabel">Location</h3>
+          <p>Baytown Clubhouse<br>Habay 1, Bacoor, Cavite</p>
+          <a class="btn-ghost small" id="mapLink" data-i18n="detail.viewLocation" href="#" target="_blank" rel="noopener">View Location</a>
+        </div>
+      </div>
+
+      <svg class="floral-divider"><use href="#floral-divider"/></svg>
+
+      <div class="countdown">
+        <p class="countdown-label" data-i18n="countdown.label">The Celebration Begins In</p>
+        <div class="countdown-row">
+          <div class="cd-unit"><span id="cdDays">00</span><label data-i18n="countdown.days">Days</label></div>
+          <div class="cd-unit"><span id="cdHours">00</span><label data-i18n="countdown.hours">Hours</label></div>
+          <div class="cd-unit"><span id="cdMins">00</span><label data-i18n="countdown.mins">Minutes</label></div>
+          <div class="cd-unit"><span id="cdSecs">00</span><label data-i18n="countdown.secs">Seconds</label></div>
+        </div>
+      </div>
+
+      <div class="dresscode">
+        <h3 class="eyebrow" data-i18n="dresscode.eyebrow">Dress Code</h3>
+        <p class="dresscode-sub" data-i18n="dresscode.sub">Formal / Elegant Attire</p>
+        <div class="dresscode-grid">
+          <div class="dc-card">
+            <div class="dc-swatch" style="background:#F4B8C8;"></div>
+            <h4 data-i18n="dresscode.color1Title">Baby Pink</h4>
+            <p data-i18n="dresscode.color1Desc">Blush, rose, or soft pink tones</p>
+          </div>
+          <div class="dc-card">
+            <div class="dc-swatch" style="background:#D9C4A0;"></div>
+            <h4 data-i18n="dresscode.color2Title">Beige</h4>
+            <p data-i18n="dresscode.color2Desc">Cream, sand, or warm neutral tones</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-section">
+        <h3 class="eyebrow" data-i18n="gift.eyebrow">A Gift From The Heart</h3>
+        <p class="gift-sub" data-i18n="gift.sub">Your presence is the most treasured gift of all. If you wish to bring something more, here are a few ideas.</p>
+        <div class="gift-grid">
+          <div class="gift-card">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 24h32l-3 30H19l-3-30z"/><path d="M22 24v-4a10 10 0 0 1 20 0v4"/></svg>
+            <span data-i18n="gift.bags">Bags</span>
+          </div>
+          <div class="gift-card">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M26 8h12l4 10-6 4 6 4-6 30H24l-6-30 6-4-6-4z"/></svg>
+            <span data-i18n="gift.dresses">Dresses</span>
+          </div>
+          <div class="gift-card">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="24" cy="24" r="9"/><path d="M31 31l16 16"/><path d="M43 43l6 6 4-4-6-6"/></svg>
+            <span data-i18n="gift.makeup">Makeup</span>
+          </div>
+          <div class="gift-card">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 12c6 10 12 14 18 14s12-4 18-14"/><circle cx="32" cy="42" r="7"/></svg>
+            <span data-i18n="gift.necklaces">Necklaces</span>
+          </div>
+          <div class="gift-card">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M26 10h12v14c0 6-3 9-6 9s-6-3-6-9V10z"/><path d="M23 33h18l-3 21H26l-3-21z"/></svg>
+            <span data-i18n="gift.lipstick">Lipstick (Nude Shades)</span>
+          </div>
+        </div>
+        <p class="gift-note" data-i18n="gift.note">Monetary gifts are also received with gratitude and love.</p>
+      </div>
+      <div class="chapter-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="candles" data-i18n="celebration.continueBtn">Continue to 18 Roses &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 03 — 18 ROSES (BALLROOM SCENE) ============ -->
+  <section class="chapter chapter--ballroom" id="chapter-candles" data-chapter="candles">
+    <div class="ballroom-scene">
+      <div class="ballroom-caption">
+        <span class="eyebrow" data-i18n="candles.eyebrow">03 — Eighteen Roses</span>
+        <h2 class="chapter-title" data-i18n="candles.title">A Rose For Every Year</h2>
+        <p class="hint" data-i18n="candles.hint">Tap a rose to read who it's for.</p>
+      </div>
+      <div class="ballroom-mapwrap" id="ballroomMapwrapDesktop">
+        <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
+           edge-to-edge with no gaps/borders so it reads as one continuous
+           tall ballroom. Shown instead of the desktop wrap above under the
+           mobile-portrait breakpoint — see the media query in style.css. -->
+      <div class="ballroom-mapwrap-mobile" id="ballroomMapwrapMobile">
+        <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-bot.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <div class="ballroom-figures" id="candleGrid" aria-label="Eighteen roses"></div>
+      <div class="ballroom-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="treasures" data-i18n="candles.continueBtn">Continue to 18 Treasures &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 04 — 18 TREASURES (BALLROOM SCENE) ============
+       Same ballroom layout system as 18 Roses (see chapter-candles above
+       and the BALLROOM SCENE SYSTEM in js/main.js): same map, same
+       character/name positioning + collision rules, same container
+       structure, same responsive (desktop map / mobile 3-part stack)
+       behavior. Only the characters and names differ, via Treasures'
+       own existing data in main.js (treasuresData, item art "bag") —
+       nothing from 18 Roses' characters or names is reused. ============ -->
+  <section class="chapter chapter--ballroom" id="chapter-treasures" data-chapter="treasures">
+    <div class="ballroom-scene">
+      <div class="ballroom-caption">
+        <span class="eyebrow" data-i18n="treasures.eyebrow">04 — Eighteen Treasures</span>
+        <h2 class="chapter-title" data-i18n="treasures.title">Gifts From Loved Ones</h2>
+        <p class="hint" data-i18n="treasures.hint">Tap a treasure to see who it's from.</p>
+      </div>
+      <div class="ballroom-mapwrap" id="treasuresMapwrapDesktop">
+        <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
+           edge-to-edge with no gaps/borders so it reads as one continuous
+           tall ballroom. Shown instead of the desktop wrap above under the
+           mobile-portrait breakpoint — see the media query in style.css. -->
+      <div class="ballroom-mapwrap-mobile" id="treasuresMapwrapMobile">
+        <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-bot.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <div class="ballroom-figures" id="treasureGrid" aria-label="Eighteen treasures"></div>
+      <div class="ballroom-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="wishes" data-i18n="treasures.continueBtn">Continue to 18 Wishes &amp; Prayers &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 05 — 18 WISHES & PRAYERS (BALLROOM SCENE) ============
+       Same ballroom layout system as 18 Roses / 18 Treasures (see
+       chapter-candles above and the BALLROOM SCENE SYSTEM in js/main.js):
+       same map, same character/name positioning + collision rules, same
+       container structure, same responsive (desktop map / mobile 3-part
+       stack) behavior. Only the characters and names differ, via Wishes'
+       own existing data in main.js (wishesData and the "candle" item art)
+       — nothing from 18 Roses' or 18 Treasures' characters or names is
+       reused. ============ -->
+  <section class="chapter chapter--ballroom" id="chapter-wishes" data-chapter="wishes">
+    <div class="ballroom-scene">
+      <div class="ballroom-caption">
+        <span class="eyebrow" data-i18n="wishes.eyebrow">05 — Eighteen Wishes &amp; Prayers</span>
+        <h2 class="chapter-title" data-i18n="wishes.title">A Candle For Each Blessing</h2>
+        <p class="hint" data-i18n="wishes.hint">Tap a candle to read a wish or prayer.</p>
+      </div>
+      <div class="ballroom-mapwrap" id="wishesMapwrapDesktop">
+        <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
+           edge-to-edge with no gaps/borders so it reads as one continuous
+           tall ballroom. Shown instead of the desktop wrap above under the
+           mobile-portrait breakpoint — see the media query in style.css. -->
+      <div class="ballroom-mapwrap-mobile" id="wishesMapwrapMobile">
+        <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-bot.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <div class="ballroom-figures" id="wishGrid" aria-label="Eighteen wishes and prayers"></div>
+      <div class="ballroom-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="bills" data-i18n="wishes.continueBtn">Continue to 18 Bills &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 06 — 18 BILLS (BALLROOM SCENE) ============
+       Same ballroom layout system as 18 Roses / 18 Treasures / 18 Wishes
+       & Prayers (see chapter-candles above and the BALLROOM SCENE SYSTEM
+       in js/main.js): same map, same character/name positioning +
+       collision rules, same container structure, same responsive
+       (desktop map / mobile 3-part stack) behavior. Only the characters
+       and names differ, via Bills' own existing data in main.js
+       (billsData and the "cash" item art) — nothing from 18 Roses',
+       18 Treasures', or 18 Wishes & Prayers' characters or names is
+       reused. ============ -->
+  <section class="chapter chapter--ballroom" id="chapter-bills" data-chapter="bills">
+    <div class="ballroom-scene">
+      <div class="ballroom-caption">
+        <span class="eyebrow" data-i18n="bills.eyebrow">06 — Eighteen Bills</span>
+        <h2 class="chapter-title" data-i18n="bills.title">A Toast to Prosperity</h2>
+        <p class="hint" data-i18n="bills.hint">Pull a tag to reveal a name.</p>
+      </div>
+      <div class="ballroom-mapwrap" id="billsMapwrapDesktop">
+        <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
+           edge-to-edge with no gaps/borders so it reads as one continuous
+           tall ballroom. Shown instead of the desktop wrap above under the
+           mobile-portrait breakpoint — see the media query in style.css. -->
+      <div class="ballroom-mapwrap-mobile" id="billsMapwrapMobile">
+        <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <img src="map-mobile-bot.jpg" alt="" class="ballroom-map-part" draggable="false">
+        <div class="ballroom-scrim" aria-hidden="true"></div>
+      </div>
+      <div class="ballroom-figures" id="billGrid" aria-label="Eighteen bills"></div>
+      <div class="ballroom-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="memories" data-i18n="bills.continueBtn">Continue to Memories &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 07 — MEMORIES ============ -->
+  <section class="chapter chapter-memories" id="chapter-memories" data-chapter="memories">
+
+    <!-- Scene-wide curtains: left & right drapes frame the full installation -->
+    <div class="mem-curtain mem-curtain--left" aria-hidden="true">
+      <img src="assets/curtain_left.png" alt="">
+    </div>
+    <div class="mem-curtain mem-curtain--right" aria-hidden="true">
+      <img src="assets/curtain_right.png" alt="">
+    </div>
+
+    <!-- Floral corner swags anchored to the upper corners -->
+    <div class="mem-floral mem-floral--left" aria-hidden="true">
+      <img src="assets/23.png" alt="">
+    </div>
+    <div class="mem-floral mem-floral--right" aria-hidden="true">
+      <img src="assets/24.png" alt="">
+    </div>
+
+    <!-- String lights span the full width above the title -->
+    <div class="mem-lights" aria-hidden="true">
+      <img src="assets/25.png" alt="">
+    </div>
+
+    <!-- Scrollable inner content -->
+    <div class="chapter-inner mem-inner">
+
+      <!-- Title — part of the wall, not a banner -->
+      <div class="mem-title-block">
+        <span class="eyebrow mem-eyebrow" data-i18n="memories.eyebrow">07 — Memories</span>
+        <h2 class="chapter-title mem-chapter-title" data-i18n="memories.title">A Wall of Moments</h2>
+        <p class="memories-tagline">
+          <span data-i18n="memories.taglineA">Collect Moments,</span>
+          <span class="tagline-accent" data-i18n="memories.taglineB">Not Things</span>
+        </p>
+      </div>
+
+      <!-- Add Memory button — no QR code -->
+      <div class="memory-toolbar">
+        <button class="btn-gold" id="openMemoryUpload" data-i18n="memories.addBtn">Add Your Memory</button>
+        <!-- QR hidden: guests receive a physical QR card pointing to guest.html -->
+        <div class="memory-qr" id="memoryQr" hidden>
+          <p class="memory-qr-label" data-i18n="memories.qrLabel">Scan to share from your phone</p>
+          <div class="memory-qr-code" id="memoryQrCode" aria-hidden="true"></div>
+          <a class="memory-qr-link" id="memoryQrLink" href="guest.html" target="_blank" rel="noopener">guest.html</a>
+        </div>
+      </div>
+
+      <!-- Physical Memory Wall Display Wrapper — Full Screen Width -->
+      <div class="memory-wall-wrapper">
+        <!-- Subtle hanging gold display cords behind memory cards -->
+        <svg class="memory-cords-svg" viewBox="0 0 1400 380" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="cordGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#c9a765" stop-opacity="0.05" />
+              <stop offset="10%" stop-color="#c9a765" stop-opacity="0.6" />
+              <stop offset="50%" stop-color="#f0d98a" stop-opacity="0.85" />
+              <stop offset="90%" stop-color="#c9a765" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="#c9a765" stop-opacity="0.05" />
+            </linearGradient>
+            <filter id="cordShadow" x="-10%" y="-20%" width="120%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#c9a765" flood-opacity="0.3" />
+            </filter>
+          </defs>
+          <!-- Row 1 hanging display cord -->
+          <path d="M 0,30 Q 700,48 1400,30" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
+          <!-- Row 2 hanging display cord -->
+          <path d="M 0,195 Q 700,213 1400,195" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
+          <!-- Row 3 hanging display cord -->
+          <path d="M 0,360 Q 700,378 1400,360" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
+        </svg>
+
+        <!-- The memory wall — primary visual hero -->
+        <div class="memory-wall" id="memoryWall">
+          <p class="wall-loading" data-i18n="memories.loading">Gathering memories…</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="memory-pagination" id="memoryPagination" hidden>
+        <button type="button" class="btn-ghost small memory-page-btn" id="memoryPrevBtn" data-i18n="memories.prevBtn">&larr; Previous</button>
+        <span class="memory-page-status" id="memoryPageStatus"></span>
+        <button type="button" class="btn-ghost small memory-page-btn" id="memoryNextBtn" data-i18n="memories.nextBtn">Next &rarr;</button>
+      </div>
+
+      <!-- Asset Footer: Continue button at top of decorative asset footer (27.png) -->
+      <footer class="mem-asset-footer">
+        <div class="mem-footer-btn-wrap">
+          <button type="button" class="btn-gold chapter-continue-btn" data-goto="messages" data-i18n="memories.continueBtn">Continue to Messages &rarr;</button>
+        </div>
+        <div class="memories-bottom-decor" aria-hidden="true">
+          <img src="assets/27.png" alt="">
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 07 — MESSAGES ============ -->
+  <section class="chapter" id="chapter-messages" data-chapter="messages">
+    <div class="chapter-inner">
+      <div class="chapter-head">
+        <span class="eyebrow" data-i18n="messages.eyebrow">08 — Messages</span>
+        <h2 class="chapter-title" data-i18n="messages.title">A Message For Aliyah</h2>
+      </div>
+
+      <!-- Leave a Message button opens the notepad modal -->
+      <div class="message-toolbar">
+        <button class="btn-gold" id="openMessageModal" data-i18n="messages.submitBtn">Leave A Message</button>
+      </div>
+
+      <!-- Notepad message cards -->
+      <div class="message-wall" id="messageWall">
+        <p class="wall-loading" data-i18n="messages.loading">Gathering messages…</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="message-pagination" id="messagePagination" hidden>
+        <button type="button" class="btn-ghost small memory-page-btn" id="msgPrevBtn" data-i18n="messages.prevBtn">&larr; Previous</button>
+        <span class="memory-page-status" id="msgPageStatus"></span>
+        <button type="button" class="btn-ghost small memory-page-btn" id="msgNextBtn" data-i18n="messages.nextBtn">Next &rarr;</button>
+      </div>
+
+      <div class="chapter-footer">
+        <button type="button" class="btn-gold chapter-continue-btn" data-goto="goodbye" data-i18n="messages.continueBtn">Continue to Goodbye &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER 08 — GOODBYE ============ -->
+  <section class="chapter" id="chapter-goodbye" data-chapter="goodbye">
+    <div class="chapter-inner">
+      <svg class="floral-divider"><use href="#floral-divider"/></svg>
+      <p class="eyebrow" data-i18n="goodbye.thanks">Thank You For Celebrating With Us</p>
+      <p class="goodbye-name">Aliyah Jasmine</p>
+      <p class="goodbye-18">18</p>
+      <p class="goodbye-msg" data-i18n="goodbye.msg">Thank you for being part of this special chapter. Every candle, every treasure, every message — it all means more than words can hold.</p>
+      <p class="goodbye-date">09 . 05 . 2026</p>
+      <svg class="floral-divider"><use href="#floral-divider"/></svg>
+      <button class="btn-ghost small" id="replayBtn" style="margin-top:1.4em;" data-i18n="goodbye.replayBtn">Replay the Invitation</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ DETAIL MODAL (candles / treasures / bills) ============ -->
+<div class="modal-overlay" id="detailModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <button class="modal-close" id="detailModalClose" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow" id="modalEyebrow"></p>
+    <p class="modal-name" id="modalName"></p>
+    <p class="modal-msg" id="modalMsg"></p>
+  </div>
+</div>
+
+<!-- ============ MEMORY UPLOAD MODAL ============ -->
+<div class="modal-overlay" id="uploadModal" hidden>
+  <div class="modal-card memory-upload-card" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
+    <button class="modal-close" id="uploadModalClose" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow" data-i18n="memories.eyebrow">Memories</p>
+    <p class="modal-name" id="uploadTitle" data-i18n="memories.modalTitle">Add Your Memory</p>
+    <form id="uploadForm" novalidate>
+      <div class="form-field">
+        <label for="memName" data-i18n="memories.nameLabel">Your Name</label>
+        <input type="text" id="memName" maxlength="60" autocomplete="name" placeholder="Your Name" aria-describedby="memNameError" required>
+        <p class="field-error" id="memNameError" aria-live="polite"></p>
+      </div>
+      <div class="form-field">
+        <label for="memCaption" data-i18n="memories.captionLabel">Description</label>
+        <textarea id="memCaption" maxlength="500" placeholder="Write something about this memory..." aria-describedby="memCaptionError" required></textarea>
+        <p class="field-error" id="memCaptionError" aria-live="polite"></p>
+      </div>
+      <div class="form-field">
+        <label for="memImage" data-i18n="memories.photoLabel">Photo</label>
+        <label class="upload-photo-control" for="memImage"><span data-i18n="memories.uploadBtn">Upload Photo</span></label>
+        <input class="visually-hidden" type="file" id="memImage" accept="image/*,.heic,.heif" aria-describedby="memImageError" required>
+        <div class="photo-preview" id="photoPreview" hidden><img id="photoPreviewImage" alt="Selected memory photo preview"></div>
+        <p class="field-error" id="memImageError" aria-live="polite"></p>
+        <p class="form-note" data-i18n="memories.photoNote">Required — photos from phone, tablet, or PC (JPG, PNG, WebP, HEIC/HEIF).</p>
+      </div>
+      <div class="memory-modal-actions">
+        <button type="button" class="btn-ghost small" id="uploadCancel" data-i18n="memories.cancelBtn">Cancel</button>
+        <button type="submit" class="btn-gold" data-i18n="memories.submitBtn">Add Memory</button>
+      </div>
+      <p class="form-status" id="uploadStatus"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MESSAGE NOTEPAD MODAL ============ -->
+<div class="modal-overlay" id="messageModal" hidden>
+  <div class="modal-card notepad-card" role="dialog" aria-modal="true" aria-labelledby="messageModalTitle">
+    <button class="modal-close" id="messageModalClose" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow" data-i18n="messages.eyebrow">08 — Messages</p>
+    <p class="modal-name" id="messageModalTitle" data-i18n="messages.title">A Message For Aliyah</p>
+    <form id="messageForm" novalidate>
+      <div class="notepad-sheet">
+        <div class="notepad-name-row">
+          <label class="notepad-label" for="msgName" data-i18n="messages.nameLabel">Your Name</label>
+          <input class="notepad-name-input" type="text" id="msgName" maxlength="60" autocomplete="name" placeholder="Your name…" required>
+        </div>
+        <div class="notepad-lines">
+          <textarea class="notepad-textarea" id="msgText" maxlength="500" placeholder="Write your message…" required></textarea>
+        </div>
+      </div>
+      <div class="memory-modal-actions">
+        <button type="button" class="btn-ghost small" id="messageModalCancel" data-i18n="memories.cancelBtn">Cancel</button>
+        <button type="submit" class="btn-gold" data-i18n="messages.submitBtn">Leave A Message</button>
+      </div>
+      <p class="form-status" id="msgStatus"></p>
+    </form>
+  </div>
+</div>
+
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="audio/background-music.mp3" type="audio/mpeg">
+</audio>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <div class="lightbox-overlay"></div>
+      <div class="lightbox-content">
+        <img id="lightbox-photo" class="lightbox-photo" src="" alt="" loading="lazy">
+        <div class="lightbox-info">
+          <div class="lightbox-guest"><span class="lightbox-name" id="lightbox-name"></span></div>
+          <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+        <div class="lightbox-actions">
+          <button type="button" class="lightbox-action save-photo" data-i18n-aria="lightbox.saveAria" title="Save Photo">
+            <span data-i18n="lightbox.saveBtn">Save Photo</span>
+          </button>
+          <button type="button" class="lightbox-action share-photo" data-i18n-aria="lightbox.shareAria" title="Share">
+            <span data-i18n="lightbox.shareBtn">Share</span>
+          </button>
+        </div>
+        <p class="lightbox-status" id="lightbox-status" role="status" aria-live="polite"></p>
+        <button type="button" class="lightbox-close" aria-label="Close lightbox" data-i18n-aria="lightbox.closeAria">
+          <span data-i18n="lightbox.closeBtn">✕</span>
+        </button>
+      </div>
+    </div>
+<div class="particle-layer" id="particleLayer" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="floral-corner" viewBox="0 0 200 200">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8,8 C40,10 55,30 50,60 C46,85 65,95 90,80 C110,68 130,75 135,95 C140,118 165,120 180,100"/>
+        <path d="M50,60 C60,55 68,62 64,72 C60,82 46,80 44,68"/>
+        <path d="M90,80 C95,68 108,68 110,80 C112,92 100,96 92,90"/>
+        <path d="M135,95 C145,88 155,92 152,104 C150,114 138,112 136,102"/>
+        <path d="M22,30 C30,24 38,28 36,38 C34,46 24,44 22,36"/>
+        <circle cx="8" cy="8" r="3"/>
+        <circle cx="180" cy="100" r="2.4"/>
+        <circle cx="115" cy="60" r="1.8"/>
+      </g>
+    </symbol>
+    <symbol id="floral-divider" viewBox="0 0 400 40">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M0,20 C60,5 90,35 140,20 C170,10 190,10 200,20 C210,30 230,30 260,20 C310,5 340,35 400,20"/>
+        <circle cx="200" cy="20" r="3.5"/>
+        <circle cx="140" cy="20" r="2"/>
+        <circle cx="260" cy="20" r="2"/>
+      </g>
+    </symbol>
+    <symbol id="rose-icon" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 30c-6-4-9-10-6-16 3-6 11-7 15-2 3-9 13-11 18-5 5 6 1 15-8 18-3 8-12 10-19 5z"/>
+        <path d="M32 30c-9 2-15 9-14 17 1 7 8 11 15 9 6-2 10-9 8-16-1-5-5-9-9-10z"/>
+        <path d="M31 46c-2 5-2 10 0 14"/>
+        <path d="M20 52c3-3 7-4 11-3"/>
+        <path d="M42 50c-3-2-7-2-10 0"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/loader.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/upload-service.js"></script>
+<script src="js/main.js?v=20260829.5"></script>
+</body>
+</html>
