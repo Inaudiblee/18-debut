@@ -1,16 +1,3 @@
-/* ============================================================
-   i18n.js
-   English / Filipino localization for the whole site.
-   - TRANSLATIONS holds every user-facing string, keyed by a
-     dot-path (e.g. "rsvp.yesBtn").
-   - applyLanguage(lang) walks the DOM for [data-i18n],
-     [data-i18n-placeholder] and [data-i18n-aria] attributes and
-     fills them in, then remembers the choice for next time.
-   - The language gate (the very first thing the visitor sees)
-     lets them pick English or Filipino; that choice is what
-     "applyLanguage" uses, and it affects every chapter/page
-     because every chapter reads from the same TRANSLATIONS map.
-   ============================================================ */
 (function (global) {
   "use strict";
 
@@ -42,18 +29,8 @@
       "letter.body1": "Some birthdays are simply celebrated. Others mark the beginning of something new — a little more poise, a little more grace, and the woman she is becoming.",
       "letter.body2": "On the fifth of September, we open our doors and our hearts as Aliyah Jasmine turns eighteen. There will be candlelight, laughter, treasured company, and a great deal of joy.",
       "letter.body3": "We would be so glad if you could be part of it.",
-      "letter.question": "Will you join us?",
+      "letter.thankyou": "Thank you for the invitation.",
 
-      "rsvp.nameLabel": "Your Full Name",
-      "rsvp.namePlaceholder": "e.g. Maria Dela Cruz",
-      "rsvp.nameHint": "Please write your full name so we can find you on the guest list.",
-      "rsvp.yesBtn": "Yes, I'll Be There",
-      "rsvp.maybeBtn": "Maybe — Not Yet Sure",
-      "rsvp.or": "or",
-      "rsvp.alreadyBtn": "I'm Already On The List",
-      "rsvp.yesResponse": "Wonderful, {name} — we can't wait to celebrate with you.",
-      "rsvp.maybeResponse": "We hope you can still make it, {name} — the details are just ahead.",
-      "rsvp.alreadyResponse": "Welcome back — you're on the list. See you at the celebration.",
       "rsvp.continueBtn": "Continue to the Celebration →",
 
       "celebration.eyebrow": "02 — The Celebration",
@@ -135,6 +112,28 @@
       "memories.nextBtn": "Next →",
       "memories.pageStatus": "Page {current} of {total}",
       "memories.qrLabel": "Scan to share from your phone",
+      "memories.saveAllBtn": "Save All Photos",
+      "memories.downloadCollageBtn": "Save Collage",
+      "memories.downloadPreparing": "Preparing photos…",
+      "memories.downloadFetching": "Downloading photo {current} of {total}…",
+      "memories.downloadZipping": "Packing everything into a ZIP…",
+      "memories.downloadBuildingCollage": "Building your collage…",
+      "memories.downloadShareReady": "Choose where to save batch {current} of {total}…",
+      "memories.downloadShareReadySingle": "Choose where to save your collage…",
+      "memories.downloadShareAllDone": "Sent to save — finish up in the app you chose.",
+      "memories.downloadCancelled": "Cancelled — nothing else was sent.",
+      "memories.downloadNotSupported": "Your browser can't share photos directly — try again for a ZIP download instead.",
+      "memories.downloadDone": "Done — check your downloads.",
+      "memories.downloadEmpty": "No memories to download yet.",
+      "memories.downloadError": "Something went wrong. Please try again.",
+      "memories.downloadPartial": "Done — {count} photo(s) couldn't be included.",
+      "memories.downloadBatchComplete": "{processed} of {total} photos processed.",
+      "memories.downloadShareNextBtn": "Share Next {count} Photos",
+      "memories.downloadUnsupportedRemaining": "{processed} of {total} photos processed. The remaining {remaining} photos can't be shared by this browser.",
+      "memories.downloadRemainingZipBtn": "Download Remaining Photos as ZIP",
+      "memories.downloadCancelledPartial": "Sharing cancelled. {processed} of {total} photos were processed. {remaining} photos remain.",
+      "memories.downloadContinueBtn": "Continue Sharing",
+      "memories.downloadRetryBtn": "Try Again",
 
       "guest.eyebrow": "A Wall of Moments",
       "guest.title": "Share a memory with us",
@@ -220,18 +219,8 @@
       "letter.body1": "May mga kaarawang ipinagdiriwang lamang. May mga kaarawan namang tanda ng simula ng bago — mas may dignidad, mas may kagandahang-loob, at ang babaeng kanyang nararapat maging.",
       "letter.body2": "Sa ikalimang araw ng Setyembre, bubuksan namin ang aming pinto at puso habang si Aliyah Jasmine ay sumasapit sa labingwalo. Magkakaroon ng ilaw ng kandila, tawanan, mahalagang kasama, at kasiyahang walang hanggan.",
       "letter.body3": "Ikagagalak naming malaman na kayo ay makakasama.",
-      "letter.question": "Sasama ba kayo?",
+      "letter.thankyou": "Salamat sa imbitasyon.",
 
-      "rsvp.nameLabel": "Buong Pangalan",
-      "rsvp.namePlaceholder": "hal. Maria Dela Cruz",
-      "rsvp.nameHint": "Paki-sulat ang inyong buong pangalan upang mahanap namin kayo sa listahan ng mga panauhin.",
-      "rsvp.yesBtn": "Oo, Ako'y Darating",
-      "rsvp.maybeBtn": "Maaaring Oo — Hindi Pa Sigurado",
-      "rsvp.or": "o kaya",
-      "rsvp.alreadyBtn": "Nasa Listahan Na Ako",
-      "rsvp.yesResponse": "Kahanga-hanga, {name} — inaabangan naming makasama ka sa pagdiriwang.",
-      "rsvp.maybeResponse": "Umaasa kaming makarating ka pa rin, {name} — narito ang mga detalye.",
-      "rsvp.alreadyResponse": "Maligayang pagbabalik — nasa listahan ka na. Kita-kits sa pagdiriwang.",
       "rsvp.continueBtn": "Magpatuloy sa Pagdiriwang →",
 
       "celebration.eyebrow": "02 — Ang Pagdiriwang",
@@ -313,6 +302,28 @@
       "memories.nextBtn": "Susunod →",
       "memories.pageStatus": "Pahina {current} ng {total}",
       "memories.qrLabel": "I-scan upang magbahagi mula sa iyong telepono",
+      "memories.saveAllBtn": "I-save Lahat ng Larawan",
+      "memories.downloadCollageBtn": "I-save ang Collage",
+      "memories.downloadPreparing": "Inihahanda ang mga larawan…",
+      "memories.downloadFetching": "Dina-download ang larawan {current} ng {total}…",
+      "memories.downloadZipping": "Isinasama sa isang ZIP file…",
+      "memories.downloadBuildingCollage": "Ginagawa ang iyong collage…",
+      "memories.downloadShareReady": "Piliin kung saan i-save ang batch {current} ng {total}…",
+      "memories.downloadShareReadySingle": "Piliin kung saan i-save ang collage…",
+      "memories.downloadShareAllDone": "Naipadala na para i-save — tapusin sa app na iyong pinili.",
+      "memories.downloadCancelled": "Kinansela — wala nang ibang naipadala.",
+      "memories.downloadNotSupported": "Hindi direktang ma-share ng iyong browser ang mga larawan — subukan muli para sa ZIP download.",
+      "memories.downloadDone": "Tapos na — tingnan ang iyong downloads.",
+      "memories.downloadEmpty": "Wala pang mga alaala na pwedeng i-download.",
+      "memories.downloadError": "May naganap na error. Subukan muli.",
+      "memories.downloadPartial": "Tapos na — {count} larawan ang hindi nasama.",
+      "memories.downloadBatchComplete": "{processed} sa {total} na larawan ang naiproseso.",
+      "memories.downloadShareNextBtn": "I-share ang Susunod na {count} Larawan",
+      "memories.downloadUnsupportedRemaining": "{processed} sa {total} na larawan ang naiproseso. Ang natitirang {remaining} na larawan ay hindi ma-share ng browser na ito.",
+      "memories.downloadRemainingZipBtn": "I-download ang Natitirang Larawan bilang ZIP",
+      "memories.downloadCancelledPartial": "Kinansela ang pag-share. {processed} sa {total} na larawan ang naiproseso. {remaining} na larawan ang natitira.",
+      "memories.downloadContinueBtn": "Ipagpatuloy ang Pag-share",
+      "memories.downloadRetryBtn": "Subukan Muli",
 
       "guest.eyebrow": "Isang Pader ng Mga Sandali",
       "guest.title": "Magbahagi ng alaala sa amin",
@@ -386,7 +397,6 @@
     try {
       localStorage.setItem(STORAGE_KEY, lang);
     } catch (e) {
-      /* storage unavailable — the choice just won't persist between visits */
     }
   }
 

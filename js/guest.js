@@ -1,25 +1,9 @@
-/* ============================================================
-   guest.js
-   Logic for the standalone QR guest-submission page
-   (guest.html). Deliberately self-contained (its own DOMContentLoaded
-   listener, its own copies of the small helpers it needs) rather than
-   reusing js/main.js, since main.js is written for the full
-   scroll-snap invitation (language gate, preloader, chapter nav,
-   ballroom scenes, etc.) that this page intentionally skips — see
-   STEP5_HANDOFF.md for why. It shares the exact same persistence
-   layer (js/storage.js -> window.AJStorage) as the main site, so a
-   memory submitted here appears on the same Memories wall.
-   ============================================================ */
 (function () {
   "use strict";
 
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const t = (key) => window.AJ_I18N.t(key, window.AJ_LANG || "en");
 
-  /* ---- Language: no language gate on this page (it's meant to be a
-     quick, one-tap-from-camera-scan experience) — just apply whatever
-     the visitor last chose on the main site, default to English, and
-     offer a small EN/FIL toggle in the corner. ---- */
   function setActiveLangButtons(lang) {
     document.querySelectorAll(".guest-lang-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.lang === lang);
@@ -37,10 +21,6 @@
     });
   }
 
-  /* ---- Same resize/compress approach as the main site's memory
-     upload modal (js/main.js resizeImage), duplicated here since this
-     page doesn't load main.js. Keeps stored photo sizes consistent
-     with what's already on the wall. ---- */
   function resizeImage(file) {
     return new Promise((resolve, reject) => {
       if (!file) { resolve(""); return; }
@@ -82,6 +62,7 @@
     const photoPreviewImage = $("#gPhotoPreviewImage");
     let previewUrl = "";
     let isSubmitting = false;
+    let redirectTimer = null;
 
     function clearErrors() {
       form.querySelectorAll(".field-error").forEach((el) => (el.textContent = ""));
@@ -127,7 +108,6 @@
         photoPreviewImage.src = previewUrl;
         photoPreview.hidden = false;
       } catch (e) {
-        /* silent fallback if preview fails */
       }
     });
 
@@ -164,6 +144,9 @@
         if (res && res.success) {
           form.hidden = true;
           thanks.hidden = false;
+          redirectTimer = setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1800);
         } else {
           throw new Error(t("guest.errorGeneric"));
         }
@@ -175,6 +158,10 @@
     });
 
     $("#guestAddAnother").addEventListener("click", () => {
+      if (redirectTimer) {
+        clearTimeout(redirectTimer);
+        redirectTimer = null;
+      }
       resetForm();
       thanks.hidden = true;
       form.hidden = false;

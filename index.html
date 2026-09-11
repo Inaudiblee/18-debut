@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="is-gated">
-
-<!-- ============ LANGUAGE GATE (pre-loading localization) ============ -->
 <div class="lang-gate" id="langGate">
   <div class="lang-gate-card">
     <p class="lang-gate-mark">Aliyah Jasmine</p>
@@ -30,8 +28,6 @@
     <p class="lang-gate-foot">You can switch languages anytime from the top menu.</p>
   </div>
 </div>
-
-<!-- ============ PRELOADER (only appears if loading is slow) ============ -->
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-inner">
     <div class="preloader-ring"></div>
@@ -67,24 +63,12 @@
     <svg class="icon-playing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>
     <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/><path d="M2 2l20 20" stroke="#e6cd93"/></svg>
   </button>
-  <!-- Mobile-only hamburger toggle. Hidden on desktop/tablet; shown under
-       the mobile nav breakpoint in style.css (same breakpoint that hides
-       .nav-list). Opens #mobileNavPanel, a dropdown reusing the same
-       [data-goto] buttons/i18n keys as the desktop nav-list below, so
-       clicks route through the existing delegated click handler in
-       main.js with no duplicate navigation logic. -->
   <button type="button" class="nav-burger" id="navBurger" data-i18n-aria="nav.menuAria" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavPanel">
     <span class="nav-burger-bar"></span>
     <span class="nav-burger-bar"></span>
     <span class="nav-burger-bar"></span>
   </button>
 </nav>
-
-<!-- Mobile navigation dropdown + backdrop. Desktop/tablet: never shown
-     (display:none outside the mobile breakpoint). Mobile: toggled open/
-     closed by #navBurger via main.js, which just adds/removes the
-     .is-open class and lets the existing document-level [data-goto]
-     click handler perform the actual chapter navigation. -->
 <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
 <div class="mobile-nav" id="mobileNavPanel" aria-hidden="true">
   <div class="mobile-nav-inner">
@@ -104,8 +88,6 @@
 </div>
 
 <main id="main">
-
-  <!-- ============ CHAPTER 01 — INVITATION ============ -->
   <section class="chapter" id="chapter-invitation" data-chapter="invitation">
     <div class="floral-frame" aria-hidden="true">
       <svg class="corner c-tl"><use href="#floral-corner"/></svg>
@@ -150,27 +132,9 @@
           <p class="letter-body" data-i18n="letter.body1">Some birthdays are simply celebrated. Others mark the beginning of something new — a little more poise, a little more grace, and the woman she is becoming.</p>
           <p class="letter-body" data-i18n="letter.body2">On the fifth of September, we open our doors and our hearts as Aliyah Jasmine turns eighteen. There will be candlelight, laughter, treasured company, and a great deal of joy.</p>
           <p class="letter-body" data-i18n="letter.body3">We would be so glad if you could be part of it.</p>
-          <p class="letter-question" data-i18n="letter.question">Will you join us?</p>
+          <p class="letter-question" data-i18n="letter.thankyou">Thank you for the invitation.</p>
 
-          <div class="rsvp-name-field">
-            <label for="rsvpName" data-i18n="rsvp.nameLabel">Your Full Name</label>
-            <input type="text" id="rsvpName" maxlength="80" autocomplete="name" data-i18n-placeholder="rsvp.namePlaceholder" placeholder="e.g. Maria Dela Cruz">
-            <p class="rsvp-name-hint" data-i18n="rsvp.nameHint">Please write your full name so we can find you on the guest list.</p>
-          </div>
-
-          <div class="rsvp-row">
-            <button class="btn-gold" id="rsvpYes" data-i18n="rsvp.yesBtn" disabled>Yes, I'll Be There</button>
-            <button class="btn-ghost" id="rsvpMaybe" data-i18n="rsvp.maybeBtn">Maybe — Not Yet Sure</button>
-          </div>
-
-          <div class="rsvp-divider"><span data-i18n="rsvp.or">or</span></div>
-
-          <div class="rsvp-listed">
-            <button class="btn-ghost small" id="rsvpAlready" data-i18n="rsvp.alreadyBtn">I'm Already On The List</button>
-          </div>
-
-          <p class="rsvp-response" id="rsvpResponse" hidden></p>
-          <div class="rsvp-continue" id="rsvpContinue" hidden>
+          <div class="rsvp-continue" id="rsvpContinue">
             <button class="btn-gold" id="rsvpContinueBtn" data-i18n="rsvp.continueBtn">Continue to the Celebration →</button>
           </div>
         </div>
@@ -179,7 +143,6 @@
     </div>
   </section>
 
-  <!-- ============ CHAPTER 02 — CELEBRATION ============ -->
   <section class="chapter" id="chapter-celebration" data-chapter="celebration">
     <div class="chapter-inner">
       <div class="chapter-head">
@@ -259,7 +222,6 @@
     </div>
   </section>
 
-  <!-- ============ CHAPTER 03 — 18 ROSES (BALLROOM SCENE) ============ -->
   <section class="chapter chapter--ballroom" id="chapter-candles" data-chapter="candles">
     <div class="ballroom-scene">
       <div class="ballroom-caption">
@@ -271,10 +233,6 @@
         <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
         <div class="ballroom-scrim" aria-hidden="true"></div>
       </div>
-      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
-           edge-to-edge with no gaps/borders so it reads as one continuous
-           tall ballroom. Shown instead of the desktop wrap above under the
-           mobile-portrait breakpoint — see the media query in style.css. -->
       <div class="ballroom-mapwrap-mobile" id="ballroomMapwrapMobile">
         <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
         <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
@@ -288,14 +246,6 @@
     </div>
   </section>
 
-  <!-- ============ CHAPTER 04 — 18 TREASURES (BALLROOM SCENE) ============
-       Same ballroom layout system as 18 Roses (see chapter-candles above
-       and the BALLROOM SCENE SYSTEM in js/main.js): same map, same
-       character/name positioning + collision rules, same container
-       structure, same responsive (desktop map / mobile 3-part stack)
-       behavior. Only the characters and names differ, via Treasures'
-       own existing data in main.js (treasuresData, item art "bag") —
-       nothing from 18 Roses' characters or names is reused. ============ -->
   <section class="chapter chapter--ballroom" id="chapter-treasures" data-chapter="treasures">
     <div class="ballroom-scene">
       <div class="ballroom-caption">
@@ -307,10 +257,7 @@
         <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
         <div class="ballroom-scrim" aria-hidden="true"></div>
       </div>
-      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
-           edge-to-edge with no gaps/borders so it reads as one continuous
-           tall ballroom. Shown instead of the desktop wrap above under the
-           mobile-portrait breakpoint — see the media query in style.css. -->
+  
       <div class="ballroom-mapwrap-mobile" id="treasuresMapwrapMobile">
         <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
         <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
@@ -324,15 +271,6 @@
     </div>
   </section>
 
-  <!-- ============ CHAPTER 05 — 18 WISHES & PRAYERS (BALLROOM SCENE) ============
-       Same ballroom layout system as 18 Roses / 18 Treasures (see
-       chapter-candles above and the BALLROOM SCENE SYSTEM in js/main.js):
-       same map, same character/name positioning + collision rules, same
-       container structure, same responsive (desktop map / mobile 3-part
-       stack) behavior. Only the characters and names differ, via Wishes'
-       own existing data in main.js (wishesData and the "candle" item art)
-       — nothing from 18 Roses' or 18 Treasures' characters or names is
-       reused. ============ -->
   <section class="chapter chapter--ballroom" id="chapter-wishes" data-chapter="wishes">
     <div class="ballroom-scene">
       <div class="ballroom-caption">
@@ -344,10 +282,6 @@
         <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
         <div class="ballroom-scrim" aria-hidden="true"></div>
       </div>
-      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
-           edge-to-edge with no gaps/borders so it reads as one continuous
-           tall ballroom. Shown instead of the desktop wrap above under the
-           mobile-portrait breakpoint — see the media query in style.css. -->
       <div class="ballroom-mapwrap-mobile" id="wishesMapwrapMobile">
         <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
         <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
@@ -360,17 +294,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ CHAPTER 06 — 18 BILLS (BALLROOM SCENE) ============
-       Same ballroom layout system as 18 Roses / 18 Treasures / 18 Wishes
-       & Prayers (see chapter-candles above and the BALLROOM SCENE SYSTEM
-       in js/main.js): same map, same character/name positioning +
-       collision rules, same container structure, same responsive
-       (desktop map / mobile 3-part stack) behavior. Only the characters
-       and names differ, via Bills' own existing data in main.js
-       (billsData and the "cash" item art) — nothing from 18 Roses',
-       18 Treasures', or 18 Wishes & Prayers' characters or names is
-       reused. ============ -->
   <section class="chapter chapter--ballroom" id="chapter-bills" data-chapter="bills">
     <div class="ballroom-scene">
       <div class="ballroom-caption">
@@ -382,10 +305,6 @@
         <img src="wholemap.png" alt="" class="ballroom-map" draggable="false">
         <div class="ballroom-scrim" aria-hidden="true"></div>
       </div>
-      <!-- Mobile-only three-part portrait map (top/middle/bottom), stacked
-           edge-to-edge with no gaps/borders so it reads as one continuous
-           tall ballroom. Shown instead of the desktop wrap above under the
-           mobile-portrait breakpoint — see the media query in style.css. -->
       <div class="ballroom-mapwrap-mobile" id="billsMapwrapMobile">
         <img src="map-mobile-top.jpg" alt="" class="ballroom-map-part" draggable="false">
         <img src="map-mobile-middle.jpg" alt="" class="ballroom-map-part" draggable="false">
@@ -399,34 +318,24 @@
     </div>
   </section>
 
-  <!-- ============ CHAPTER 07 — MEMORIES ============ -->
   <section class="chapter chapter-memories" id="chapter-memories" data-chapter="memories">
 
-    <!-- Scene-wide curtains: left & right drapes frame the full installation -->
     <div class="mem-curtain mem-curtain--left" aria-hidden="true">
       <img src="assets/curtain_left.png" alt="">
     </div>
     <div class="mem-curtain mem-curtain--right" aria-hidden="true">
       <img src="assets/curtain_right.png" alt="">
     </div>
-
-    <!-- Floral corner swags anchored to the upper corners -->
     <div class="mem-floral mem-floral--left" aria-hidden="true">
       <img src="assets/23.png" alt="">
     </div>
     <div class="mem-floral mem-floral--right" aria-hidden="true">
       <img src="assets/24.png" alt="">
     </div>
-
-    <!-- String lights span the full width above the title -->
     <div class="mem-lights" aria-hidden="true">
       <img src="assets/25.png" alt="">
     </div>
-
-    <!-- Scrollable inner content -->
     <div class="chapter-inner mem-inner">
-
-      <!-- Title — part of the wall, not a banner -->
       <div class="mem-title-block">
         <span class="eyebrow mem-eyebrow" data-i18n="memories.eyebrow">07 — Memories</span>
         <h2 class="chapter-title mem-chapter-title" data-i18n="memories.title">A Wall of Moments</h2>
@@ -435,21 +344,24 @@
           <span class="tagline-accent" data-i18n="memories.taglineB">Not Things</span>
         </p>
       </div>
-
-      <!-- Add Memory button — no QR code -->
       <div class="memory-toolbar">
         <button class="btn-gold" id="openMemoryUpload" data-i18n="memories.addBtn">Add Your Memory</button>
-        <!-- QR hidden: guests receive a physical QR card pointing to guest.html -->
+        <button type="button" class="btn-ghost small memory-download-btn" id="saveAllPhotosBtn">
+          <svg class="mem-dl-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n="memories.saveAllBtn">Save All Photos</span>
+        </button>
+        <button type="button" class="btn-ghost small memory-download-btn" id="downloadCollageBtn">
+          <svg class="mem-dl-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span data-i18n="memories.downloadCollageBtn">Save Collage</span>
+        </button>
         <div class="memory-qr" id="memoryQr" hidden>
           <p class="memory-qr-label" data-i18n="memories.qrLabel">Scan to share from your phone</p>
           <div class="memory-qr-code" id="memoryQrCode" aria-hidden="true"></div>
           <a class="memory-qr-link" id="memoryQrLink" href="guest.html" target="_blank" rel="noopener">guest.html</a>
         </div>
       </div>
-
-      <!-- Physical Memory Wall Display Wrapper — Full Screen Width -->
+      <p class="memory-download-status" id="memoryDownloadStatus" role="status" aria-live="polite"></p>
       <div class="memory-wall-wrapper">
-        <!-- Subtle hanging gold display cords behind memory cards -->
         <svg class="memory-cords-svg" viewBox="0 0 1400 380" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="cordGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -464,28 +376,19 @@
               <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#c9a765" flood-opacity="0.3" />
             </filter>
           </defs>
-          <!-- Row 1 hanging display cord -->
           <path d="M 0,30 Q 700,48 1400,30" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
-          <!-- Row 2 hanging display cord -->
           <path d="M 0,195 Q 700,213 1400,195" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
-          <!-- Row 3 hanging display cord -->
           <path d="M 0,360 Q 700,378 1400,360" stroke="url(#cordGoldGrad)" stroke-width="1.8" fill="none" filter="url(#cordShadow)" />
         </svg>
-
-        <!-- The memory wall — primary visual hero -->
         <div class="memory-wall" id="memoryWall">
           <p class="wall-loading" data-i18n="memories.loading">Gathering memories…</p>
         </div>
       </div>
-
-      <!-- Pagination -->
       <div class="memory-pagination" id="memoryPagination" hidden>
         <button type="button" class="btn-ghost small memory-page-btn" id="memoryPrevBtn" data-i18n="memories.prevBtn">&larr; Previous</button>
         <span class="memory-page-status" id="memoryPageStatus"></span>
         <button type="button" class="btn-ghost small memory-page-btn" id="memoryNextBtn" data-i18n="memories.nextBtn">Next &rarr;</button>
       </div>
-
-      <!-- Asset Footer: Continue button at top of decorative asset footer (27.png) -->
       <footer class="mem-asset-footer">
         <div class="mem-footer-btn-wrap">
           <button type="button" class="btn-gold chapter-continue-btn" data-goto="messages" data-i18n="memories.continueBtn">Continue to Messages &rarr;</button>
@@ -496,26 +399,18 @@
       </footer>
     </div>
   </section>
-
-  <!-- ============ CHAPTER 07 — MESSAGES ============ -->
   <section class="chapter" id="chapter-messages" data-chapter="messages">
     <div class="chapter-inner">
       <div class="chapter-head">
         <span class="eyebrow" data-i18n="messages.eyebrow">08 — Messages</span>
         <h2 class="chapter-title" data-i18n="messages.title">A Message For Aliyah</h2>
       </div>
-
-      <!-- Leave a Message button opens the notepad modal -->
       <div class="message-toolbar">
         <button class="btn-gold" id="openMessageModal" data-i18n="messages.submitBtn">Leave A Message</button>
       </div>
-
-      <!-- Notepad message cards -->
       <div class="message-wall" id="messageWall">
         <p class="wall-loading" data-i18n="messages.loading">Gathering messages…</p>
       </div>
-
-      <!-- Pagination -->
       <div class="message-pagination" id="messagePagination" hidden>
         <button type="button" class="btn-ghost small memory-page-btn" id="msgPrevBtn" data-i18n="messages.prevBtn">&larr; Previous</button>
         <span class="memory-page-status" id="msgPageStatus"></span>
@@ -527,8 +422,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ CHAPTER 08 — GOODBYE ============ -->
   <section class="chapter" id="chapter-goodbye" data-chapter="goodbye">
     <div class="chapter-inner">
       <svg class="floral-divider"><use href="#floral-divider"/></svg>
@@ -543,8 +436,6 @@
   </section>
 
 </main>
-
-<!-- ============ DETAIL MODAL (candles / treasures / bills) ============ -->
 <div class="modal-overlay" id="detailModal" hidden>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <button class="modal-close" id="detailModalClose" aria-label="Close">&times;</button>
@@ -553,8 +444,6 @@
     <p class="modal-msg" id="modalMsg"></p>
   </div>
 </div>
-
-<!-- ============ MEMORY UPLOAD MODAL ============ -->
 <div class="modal-overlay" id="uploadModal" hidden>
   <div class="modal-card memory-upload-card" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
     <button class="modal-close" id="uploadModalClose" aria-label="Close">&times;</button>
@@ -587,8 +476,6 @@
     </form>
   </div>
 </div>
-
-<!-- ============ MESSAGE NOTEPAD MODAL ============ -->
 <div class="modal-overlay" id="messageModal" hidden>
   <div class="modal-card notepad-card" role="dialog" aria-modal="true" aria-labelledby="messageModalTitle">
     <button class="modal-close" id="messageModalClose" aria-label="Close">&times;</button>
@@ -678,11 +565,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/loader.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/config.js"></script>
 <script src="js/upload-service.js"></script>
-<script src="js/main.js?v=20260829.5"></script>
+<script src="js/main.js?v=20260901.1"></script>
+<script src="js/memory-download.js?v=20260901.1"></script>
 </body>
 </html>

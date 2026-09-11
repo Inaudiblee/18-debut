@@ -1,10 +1,3 @@
-/* ============================================================
-   netlify/functions/supabase-config.js
-   Netlify Serverless Function to expose non-sensitive public
-   Supabase credentials (URL and Anon key) to client-side JS
-   when deployed with Netlify Supabase Integration.
-   ============================================================ */
-
 const headers = {
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Allow-Origin": "*",

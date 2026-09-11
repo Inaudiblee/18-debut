@@ -1,19 +1,8 @@
-/* ============================================================
-   loader.js
-   1) Language gate — the very first thing a visitor sees. Their
-      pick is applied site-wide via AJ_I18N.applyLanguage() and
-      remembered for next time (skips the gate on return visits).
-   2) Conditional preloader — only appears if fonts / assets take
-      longer than PRELOAD_THRESHOLD to be ready. If everything is
-      ready quickly, the loading screen never shows at all.
-   3) Once both steps are done, it fires a single "aj:start" event
-      that main.js listens for before it starts the invitation.
-   ============================================================ */
 (function () {
   "use strict";
 
-  const PRELOAD_THRESHOLD = 450; /* ms — below this, no loading screen is shown */
-  const PRELOAD_MIN_VISIBLE = 420; /* ms — once shown, keep it long enough to not flash */
+  const PRELOAD_THRESHOLD = 450;
+  const PRELOAD_MIN_VISIBLE = 420; 
 
   const gate = document.getElementById("langGate");
   const preloader = document.getElementById("preloader");
@@ -85,13 +74,9 @@
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    /* Always show the language gate so every visitor picks their language.
-       If they chose before, pre-apply it so the nav active-state is correct,
-       but keep the gate visible so they can confirm or switch. */
     const saved = window.AJ_I18N.getSavedLanguage();
     if (saved) {
       window.AJ_I18N.applyLanguage(saved);
     }
-    /* Gate stays visible until chooseLanguage() runs */
   });
 })();

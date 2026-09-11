@@ -375,7 +375,12 @@ main{position:relative;z-index:5;height:100vh;height:100dvh;width:100vw;}
 .envelope-stage .eyebrow{margin-bottom:1.6em;}
 .envelope-wrap{}
 .envelope{
+<<<<<<< HEAD
   position:relative;width:min(78vw,330px);height:min(56vw,230px);perspective:1200px;
+=======
+  position:relative;width:min(78vw,330px);height:min(56vw,230px);
+  perspective:1200px;-webkit-perspective:1200px;
+>>>>>>> 364f0a9 (complete)
 }
 .envelope-back{
   position:absolute;inset:0;border-radius:3px;
@@ -387,12 +392,18 @@ main{position:relative;z-index:5;height:100vh;height:100dvh;width:100vw;}
   content:'';position:absolute;top:0;width:50%;height:100%;
   border:1px solid var(--gold-deep);opacity:.55;
 }
+<<<<<<< HEAD
 .envelope-back::before{left:0;clip-path:polygon(0 0,100% 50%,0 100%);}
 .envelope-back::after{right:0;clip-path:polygon(100% 0,0 50%,100% 100%);}
+=======
+.envelope-back::before{left:0;clip-path:polygon(0 0,100% 50%,0 100%);-webkit-clip-path:polygon(0 0,100% 50%,0 100%);}
+.envelope-back::after{right:0;clip-path:polygon(100% 0,0 50%,100% 100%);-webkit-clip-path:polygon(100% 0,0 50%,100% 100%);}
+>>>>>>> 364f0a9 (complete)
 .envelope-flap{
   position:absolute;top:0;left:0;width:100%;height:62%;
   background:linear-gradient(155deg, var(--wine-highlight), var(--burgundy) 70%);
   clip-path:polygon(0 0,100% 0,50% 92%);
+<<<<<<< HEAD
   border:1px solid var(--gold-deep);
   transform-origin:top center;
   transform-style:preserve-3d;
@@ -400,6 +411,17 @@ main{position:relative;z-index:5;height:100vh;height:100dvh;width:100vw;}
   z-index:3;
 }
 .envelope.is-open .envelope-flap{transform:rotateX(-172deg);}
+=======
+  -webkit-clip-path:polygon(0 0,100% 0,50% 92%);
+  border:1px solid var(--gold-deep);
+  transform-origin:top center;
+  transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:transform 1.1s cubic-bezier(.7,0,.2,1);
+  z-index:3;
+}
+.envelope.is-open .envelope-flap{transform:rotateX(-172deg);-webkit-transform:rotateX(-172deg);}
+>>>>>>> 364f0a9 (complete)
 .envelope-seal{
   position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);
   width:52px;height:52px;border-radius:50%;
@@ -710,6 +732,30 @@ main{position:relative;z-index:5;height:100vh;height:100dvh;width:100vw;}
   margin-bottom:clamp(.3rem,.8vh,.8rem);
 }
 
+<<<<<<< HEAD
+=======
+.memory-download-btn{
+  display:inline-flex;align-items:center;gap:.55em;
+}
+.memory-download-btn .mem-dl-icon{
+  width:15px;height:15px;flex:none;
+}
+.memory-download-btn:disabled{
+  opacity:.4;cursor:not-allowed;border-color:var(--gold-deep);color:var(--champagne);background:transparent;
+}
+.memory-download-status{
+  width:100%;text-align:center;
+  font-family:var(--font-body);font-size:.82rem;color:var(--champagne);
+  opacity:.85;min-height:1.2em;margin:.2em 0 .4em;
+}
+.memory-download-status:empty{margin:0;}
+.memory-download-controls{
+  width:100%;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:center;gap:10px;margin:0 0 .6em;
+}
+.memory-download-controls:empty{margin:0;}
+
+>>>>>>> 364f0a9 (complete)
 /* --- 12g. Memory wall wrapper & display cords — 5 Columns Wide --- */
 .memory-wall-wrapper{
   width:100%;
@@ -1396,6 +1442,10 @@ main{height:100vh;height:100dvh;}
   .mem-lights{height:clamp(60px, 12vw, 110px);}
   .memory-toolbar{gap:12px;margin-bottom:0.8rem;width:100%;justify-content:center;}
   .memory-toolbar .btn-gold{width:100%;max-width:280px;}
+<<<<<<< HEAD
+=======
+  .memory-toolbar .memory-download-btn{flex:1 1 auto;justify-content:center;}
+>>>>>>> 364f0a9 (complete)
   .memory-pagination{gap:10px;margin:0.5rem 0 0.8rem;flex-wrap:wrap;}
   .memory-page-btn{padding:.45em .9em;font-size:.82rem;min-height:38px;}
   .memory-page-status{min-width:6em;font-size:.82rem;}
