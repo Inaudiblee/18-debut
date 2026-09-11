@@ -121,6 +121,7 @@
     return new File([blob], fileName, { type: blob.type || "image/jpeg" });
   }
 
+  
   function isTouchPrimaryDevice() {
     if (typeof window.matchMedia !== "function") return false; 
     return window.matchMedia("(pointer: coarse) and (hover: none)").matches;

@@ -20,6 +20,7 @@
     { name: "Jhun Beto", character: "boy12", gender: "boy" },
     { name: "Kingsley Delos Santos", character: "boy10", gender: "boy" },
     { name: "Eleanor De Guzman", character: "girl9", gender: "girl" }
+    
   ];
   const treasuresGuests = [
     { name: "Leigh Kadowaki", character: "girl1", gender: "girl" },

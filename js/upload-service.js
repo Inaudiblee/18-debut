@@ -35,6 +35,7 @@
     return null;
   }
 
+  
   function compressImage(file) {
     return new Promise((resolve, reject) => {
       if (!file) {

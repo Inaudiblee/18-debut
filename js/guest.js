@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const t = (key) => window.AJ_I18N.t(key, window.AJ_LANG || "en");
 

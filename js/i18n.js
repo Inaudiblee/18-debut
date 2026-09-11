@@ -324,7 +324,6 @@
       "memories.downloadCancelledPartial": "Kinansela ang pag-share. {processed} sa {total} na larawan ang naiproseso. {remaining} na larawan ang natitira.",
       "memories.downloadContinueBtn": "Ipagpatuloy ang Pag-share",
       "memories.downloadRetryBtn": "Subukan Muli",
-
       "guest.eyebrow": "Isang Pader ng Mga Sandali",
       "guest.title": "Magbahagi ng alaala sa amin",
       "guest.nameLabel": "Iyong Pangalan",

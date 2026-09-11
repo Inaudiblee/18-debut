@@ -74,6 +74,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({ ok: true, total: arr.length }),
     };
   }
+  
 
   return {
     statusCode: 400,

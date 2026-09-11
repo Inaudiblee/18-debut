@@ -83,3 +83,4 @@
 
   global.AJStorage = { storageGet, storageSet, storageAppend, hasArtifactStorage };
 })(window);
+

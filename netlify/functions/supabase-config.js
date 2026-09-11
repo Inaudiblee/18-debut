@@ -29,3 +29,4 @@ exports.handler = async function (event) {
     body: JSON.stringify({ url, key }),
   };
 };
+
