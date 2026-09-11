@@ -1,23 +1,3 @@
-/* ============================================================
-   netlify/functions/store.js
-   Netlify Serverless Function replacement for api/store.php
-
-   Matches the exact API contract used by js/storage.js:
-     GET  ?action=get&key=<key>
-          -> returns stored JSON value (or null)
-     POST {"action":"set","key":<key>,"value":<value>}
-          -> replaces the value
-     POST {"action":"append","key":<key>,"value":<item>}
-          -> appends to array, capped at 1000 items
-
-   For local/Netlify testing before Supabase is connected:
-   Uses an in-memory store (persists for the duration of the lambda container)
-   backed by response payload mirroring.
-
-   When Supabase is connected, this function can be swapped or bypassed.
-   ============================================================ */
-
-// In-memory fallback cache across warm lambda invocations
 const store = {};
 
 const headers = {
@@ -28,7 +8,6 @@ const headers = {
 };
 
 exports.handler = async function (event) {
-  // CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 204, headers, body: "" };
   }
@@ -65,11 +44,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({ error: "Missing key parameter" }),
     };
   }
-
-  // Safe key sanitization
   const safeKey = String(key).replace(/[^A-Za-z0-9_\-:]/g, "_");
-
-  // GET ACTION
   if (action === "get") {
     const data = store[safeKey] !== undefined ? store[safeKey] : null;
     return {
@@ -78,8 +53,6 @@ exports.handler = async function (event) {
       body: JSON.stringify(data),
     };
   }
-
-  // SET ACTION
   if (action === "set") {
     store[safeKey] = value;
     return {
@@ -88,8 +61,6 @@ exports.handler = async function (event) {
       body: JSON.stringify({ ok: true }),
     };
   }
-
-  // APPEND ACTION
   if (action === "append") {
     const existing = store[safeKey];
     const arr = Array.isArray(existing) ? existing : [];
@@ -103,6 +74,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({ ok: true, total: arr.length }),
     };
   }
+  
 
   return {
     statusCode: 400,

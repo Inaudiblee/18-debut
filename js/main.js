@@ -1,15 +1,6 @@
 ﻿(function () {
   "use strict";
 
-  /* ============================================================
-     GUEST LIST
-     Real names for each of the 18 Roses, 18 Treasures, 18 Wishes &
-     Prayers, and 18 Bills. Edit the arrays below to update names —
-     everything else on the site follows automatically.
-     boy 7
-     ============================================================ */
-
-     
   const candlesGuests = [
     { name: "Ethan Cano", character: "student4", gender: "boy" },
     { name: "Jerry De Guzman", character: "boy4", gender: "boy" },
@@ -23,12 +14,13 @@
     { name: "Sky Delos Santos", character: "student6", gender: "boy" },
     { name: "Sef Delos Santos", character: "student8", gender: "boy" },
     { name: "Raine Gamboa", character: "girl5", gender: "girl" },
-    { name: "Kim Hernandez", character: "girl2", gender: "girl" },
+    { name: "Kim Hernandez", character: "boy6", gender: "boy" },
     { name: "Jermaine Bunanig", character: "boy5", gender: "boy" },
     { name: "Miguel Madrozo", character: "boy13", gender: "boy" },
     { name: "Jhun Beto", character: "boy12", gender: "boy" },
     { name: "Kingsley Delos Santos", character: "boy10", gender: "boy" },
     { name: "Eleanor De Guzman", character: "girl9", gender: "girl" }
+    
   ];
   const treasuresGuests = [
     { name: "Leigh Kadowaki", character: "girl1", gender: "girl" },
@@ -59,7 +51,7 @@
     { name: "Ging Valente", character: "girl8", gender: "girl" },
     { name: "Alfa Espinas", character: "girl4", gender: "girl" },
     { name: "Leigh Kadowaki", character: "girl7", gender: "girl" },
-    { name: "Chay Gambao", character: "boy8", gender: "boy" },
+    { name: "Chay Gambao", character: "student8", gender: "girl" },
     { name: "Bethel Martinez", character: "student6", gender: "girl" },
     { name: "Renalyn Reolente", character: "girl2", gender: "girl" },
     { name: "Sally Beto", character: "student7", gender: "girl" },
@@ -91,8 +83,6 @@
     { name: "Anne Ty", character: "student5", gender: "girl" }
   ];
 
-  /* Rotating generic messages per chapter — edit freely, or personalize
-     any single entry by editing the arrays these feed into below. */
   const ROSE_MSGS = [
     "Thank you for the love and light you've brought into my life.",
     "Here's to the laughter we've shared and the memories still to come.",
@@ -133,30 +123,6 @@
   const wishesData = buildSet(wishesGuests, WISH_MSGS);
   const billsData = buildSet(billsGuests, BILL_MSGS);
 
-  /* ============================================================
-     PIXEL CHARACTERS (assigned per guest in the guest objects)
-     Each of the 18 tiles in Roses, Treasures, Wishes and Bills is
-     illustrated with one of these pixel-art characters, holding
-     the item that matches that chapter (rose / bag / candle / cash).
-     Each character has two idle frames (A = default, B = "_b" suffix)
-     that cross-fade to read as a gentle breathing loop.
-     Character is now defined individually per guest, so you can
-     assign any character to any name with full control.
-     ============================================================ */
-  /* Which of pixell/girls-and-boys-by-item/{boys|girls}/ a given
-     character's art lives in is now told to us directly by each
-     guest's own "gender" field ("boy" or "girl") instead of being
-     guessed from the character code. This matters because codes like
-     "student5" or "student6" are ambiguous on disk — the SAME
-     filename (e.g. student5_rose.png) exists as a completely
-     different drawing under both boys/ and girls/, since the art
-     pack numbered its boy and girl avatars independently per item
-     rather than sharing one character library. Guessing the wrong
-     side either shows a broken image (the file doesn't exist on that
-     side for that item) or silently swaps a guest's gender between
-     chapters. Setting gender explicitly per guest removes the
-     guesswork entirely: to change which side a guest's art comes
-     from, just change their "gender" field. */
   function pixelCharFrames(item, entry) {
     const character = entry.character;
     const folder = entry.gender === "girl" ? "girls" : "boys";
@@ -167,67 +133,6 @@
     };
   }
 
-  /* ============================================================
-     BALLROOM POSITIONING RULES (read this before touching numbers
-     below)
-
-     Priority order when placing a character + its name:
-       1. Character must be visible.
-       2. Character's name must be fully visible (not clipped).
-       3. Character must not collide with another character.
-       4. Character/name must not collide with the nav bar or the
-          Continue button.
-       5. Character/name should stay inside the usable floor area.
-       6. Decorative floor roses may be covered.
-       7. Decorative floor patterns/gold lines may be covered.
-       8. The central rose is preferred visible but may be covered
-          if that gives a better character composition.
-
-     A character + its name are ONE visual unit for collision
-     purposes. That unit is allowed to sit on top of the painted
-     roses, the parquet pattern, and the gold inlay lines — those
-     are low-priority background art, not obstacles. Never move a
-     character to a worse spot just to keep a decorative rose clear.
-
-     This layout is intentionally NOT a perfectly even grid — a
-     ballroom full of people doesn't look like a spreadsheet. Some
-     rows/columns are denser than others; what matters is that every
-     character/name stays readable and collision-free.
-     ============================================================ */
-
-  /* ============================================================
-     DESKTOP — 18 BALLROOM FLOOR POSITIONS
-     One fixed spot per character (left/top, percent of the scene
-     box; "top" is where the bottom of the name label sits, since
-     .ballroom-figure is anchored with translate(-50%,-100%) and the
-     name renders below the sprite).
-
-     Three depth rows:
-       Row 1 (top 32%) — 4 figures, corners only (left <27% or
-       >73%). The 34–66% center band is left empty at this row so
-       nothing sits under the chapter title horizontally.
-       Row 2 (top 56%) and Row 3 (top 80%) — 7 figures each, evenly
-       spaced across the full 13–87% floor width, same columns as
-       row 2 so the floor reads as tidy diagonals rather than noise.
-
-     Row-to-row gap (24%) and within-row gap (~12.3%) are sized
-     against the WORST-CASE figure+label footprint (sprite + name
-     tag, computed from the live clamp() values, not a guess) at
-     every one of the five tested resolutions:
-       1920x1080, 1600x900, 1440x900, 1366x768, 1280x720
-     The tightest case is 1280x720, where the footprint is ~21% of
-     viewport height — the 24% row gap keeps a real (not
-     theoretical) margin there. Row 1's top (32%) also clears the
-     fixed nav bar with margin at 1280x720, and Row 3's top (80%)
-     clears the Continue button footer with margin. See
-     .ballroom-figure / .ballroom-figure .figure-name in style.css —
-     their clamp() values now scale with viewport HEIGHT as well as
-     width (min(...vw, ...vh)) specifically so short/wide windows
-     (1280x720 being the extreme case in our test matrix) shrink the
-     figure+label enough to keep this margin, instead of only
-     shrinking for narrow windows.
-     Character 01 -> position 1, character 02 -> position 2, etc.
-     ============================================================ */
   const DESKTOP_ROSE_POSITIONS = [
     { left: 14,   top: 32 }, { left: 27,   top: 32 }, { left: 73,   top: 32 }, { left: 86, top: 32 },
     { left: 13,   top: 56 }, { left: 25.3, top: 56 }, { left: 37.7, top: 56 },
@@ -236,40 +141,6 @@
     { left: 50,   top: 80 }, { left: 62.3, top: 80 }, { left: 74.7, top: 80 }, { left: 87, top: 80 }
   ];
 
-  /* ============================================================
-     DESKTOP — 18 ROSES ONLY: CORRECTED FLOOR POSITIONS
-     DESKTOP_ROSE_POSITIONS above is left untouched (Treasures /
-     Wishes & Prayers / Bills still use it as-is). This separate set
-     is used ONLY by the 18 Roses scene, to fix real overlap risk
-     that the original 24% row gap left on the table.
-
-     The gap above was sized against a WORST-CASE footprint that
-     assumed every guest name renders on a single line. Several
-     actual Roses names are long enough to wrap to a second line at
-     the .figure-name max-width (118px) — e.g. "Kingsley Delos
-     Santos", "Eleanor De Guzman", "Jermaine Bunanig" — which grows
-     that figure's footprint from ~21% to ~22.6% of viewport height
-     at the tightest tested size (1280x720 / 1366x768), leaving only
-     ~1.4% (≈10px) of real margin. That's the collision risk this
-     set removes.
-
-     Fix: row-to-row gap increased from 24% to 26% (~4% margin over
-     the true two-line worst case at every one of the five tested
-     resolutions: 1920x1080, 1600x900, 1440x900, 1366x768, 1280x720),
-     and the top row is dropped from 32% to 35% so its sprites still
-     clear the fixed nav bar with margin even with a two-line name
-     pulling the sprite upward. The bottom row (87%) keeps clear
-     margin above the Continue button footer for the same reason.
-
-     Layout stays the same shape as before — same 4/7/7 row split,
-     same corners-only top row (kept out of the 30–70% band so
-     nothing sits under the chapter title), same evenly spaced
-     13–87% floor width for rows 2 and 3 — only the spacing changed.
-     Character 01 -> position 1, character 02 -> position 2, etc.
-     Decorative floor roses may still be covered; only actual
-     collisions (figure/name vs. another figure/name, or vs. the
-     nav bar / Continue button) are being fixed here.
-     ============================================================ */
   const DESKTOP_ROSES_POSITIONS_FIXED = [
     { left: 12,   top: 35 }, { left: 25,   top: 35 }, { left: 75,   top: 35 }, { left: 88, top: 35 },
     { left: 13,   top: 61 }, { left: 25.3, top: 61 }, { left: 37.7, top: 61 },
@@ -278,51 +149,15 @@
     { left: 50,   top: 87 }, { left: 62.3, top: 87 }, { left: 74.7, top: 87 }, { left: 87, top: 87 }
   ];
 
-  /* ============================================================
-     MOBILE — PORTRAIT BALLROOM (three separate map images —
-     map-mobile-top.jpg / -middle.jpg / -bot.jpg — stacked edge to
-     edge in the HTML/CSS so they read as one continuous tall
-     ballroom; see .ballroom-mapwrap-mobile in the
-     "(max-width:700px) and (orientation:portrait)" block in
-     style.css). The three images share the same aspect ratio and
-     are all rendered at full device width, so each occupies exactly
-     one third of the combined wrap's height — that's what lets the
-     positions below be authored per-section (0–100% of THAT
-     section's own artwork) and then converted to a global
-     percentage of the full stacked wrap at render time.
-
-     Each section gets 6 figures, placed on the open floor and clear
-     of the chandelier/curtains (top section) and the candle table
-     (bottom section). Character 01 -> position 1, character 02 ->
-     position 2, etc., same convention as DESKTOP_ROSE_POSITIONS.
-     ============================================================ */
-  /* Row-to-row vertical gap is intentionally generous (~34–38% of a
-     section's own height). A figure + a worst-case two-line guest
-     name (long names do happen) together run to roughly 28% of a
-     section's height on typical phone widths — an earlier, tighter
-     gap (~29%) left only a few px of clearance, so a two-line name
-     in one row could visually run into the sprite of the row below
-     it. The wider gap here keeps every row clear regardless of name
-     length. */
   const MOBILE_SECTIONS = [
-    // top.jpg: chandelier/curtains occupy roughly the top fifth —
-    // figures sit lower, on the diamond rug/open floor.
     { positions: [
       { left: 22, top: 45 }, { left: 44, top: 42 }, { left: 67, top: 46 },
       { left: 33, top: 83 }, { left: 56, top: 80 }, { left: 78, top: 85 }
     ] },
-    // middle.jpg: open floor top to bottom — figures kept a little
-    // clear of the top/bottom seams so they never crowd the join.
     { positions: [
       { left: 22, top: 32 }, { left: 44, top: 29 }, { left: 67, top: 33 },
       { left: 33, top: 70 }, { left: 56, top: 67 }, { left: 78, top: 72 }
     ] },
-    // bot.jpg: floor only runs to roughly the upper 60%; the candle
-    // table below that is furniture, not floor, so figures (and
-    // their names) stay clear of it. Row 1 sits high enough that its
-    // sprite may render a little above this section's own top edge —
-    // harmless, since the floor art is continuous across the seam
-    // with the middle section above it.
     { positions: [
       { left: 22, top: 16 }, { left: 44, top: 13 }, { left: 67, top: 17 },
       { left: 33, top: 50 }, { left: 56, top: 47 }, { left: 78, top: 52 }
@@ -340,38 +175,19 @@
     return out;
   }
   const MOBILE_ROSE_POSITIONS = buildMobileRosePositions();
-
-  /* Portrait phones/small tablets get the "mobile" position set +
-     map wrap. Landscape desktop/tablet always gets "desktop", per
-     the requirement that desktop keeps its existing wide composition
-     at a comfortable size instead of being shrunk to fit. Shared by
-     every ballroom scene on the page (see BALLROOM SCENE SYSTEM
-     below) — the breakpoint itself isn't chapter-specific. */
   function isMobileBallroomViewport() {
     return window.matchMedia("(max-width: 700px) and (orientation: portrait)").matches;
   }
 
-  /* Event date/time — Asia/Manila (UTC+8) */
   const EVENT_DATE = new Date("2026-09-05T18:00:00+08:00");
   const MAP_QUERY = "Baytown Clubhouse, Habay 1, Bacoor, Cavite";
 
-  /* ============================================================
-     HELPERS
-     ============================================================ */
   const $ = (sel, ctx) => (ctx || document).querySelector(sel);
   const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const noMotion = () => reduceMotion || typeof window.gsap === "undefined";
   const t = (key) => window.AJ_I18N.t(key, window.AJ_LANG || "en");
 
-  /* Falls back to api/store.php (see /api folder) whenever window.storage
-     isn't available — e.g. once this site is uploaded to real hosting like
-     InfinityFree. Both paths use the same get/set(key, shared) shape. */
-  /* storageGet / storageSet / storageAppend now live in js/storage.js
-     (loaded before this file) so the exact same persistence layer is
-     shared with the standalone QR guest-submission page, guest.html.
-     Thin wrappers here keep every existing call site in this file
-     unchanged. */
   function hasArtifactStorage() {
     return window.AJStorage ? window.AJStorage.hasArtifactStorage() : false;
   }
@@ -389,14 +205,9 @@
     d.textContent = str || "";
     return d.innerHTML;
   }
-
-  /* Everything below runs once the language gate + preloader are done. */
   document.addEventListener("aj:start", initApp, { once: true });
 
   function initApp() {
-    /* ============================================================
-       NAVIGATION / CHAPTERS
-       ============================================================ */
     const chapters = ["invitation", "celebration", "candles", "treasures", "wishes", "bills", "memories", "messages", "goodbye"];
     let currentChapter = "invitation";
 
@@ -433,12 +244,6 @@
       }
     });
 
-    /* ============================================================
-       MOBILE HAMBURGER MENU
-       Only opens/closes the dropdown. Actual navigation is handled
-       entirely by the existing document-level [data-goto] listener
-       above — this reuses it rather than duplicating routing logic.
-       ============================================================ */
     const navBurger = document.getElementById("navBurger");
     const mobileNav = document.getElementById("mobileNavPanel");
     const mobileNavBackdrop = document.getElementById("mobileNavBackdrop");
@@ -486,10 +291,6 @@
         if (e.key === "ArrowLeft" && idx > 0) showChapter(chapters[idx - 1]);
       }
     });
-
-    /* ============================================================
-       INTRO CINEMATIC + ENVELOPE + LETTER
-       ============================================================ */
     const introStage = $("#introStage");
     const envelopeStage = $("#envelopeStage");
     const letterStage = $("#letterStage");
@@ -548,7 +349,6 @@
       }
       envelopeBtn.classList.remove("is-open");
       letterStage.hidden = true;
-      resetRsvp();
       playIntro();
     }
     introContinueBtn.addEventListener("click", (e) => {
@@ -601,77 +401,14 @@
       }
     }
 
-    /* ============================================================
-       RSVP — full name required for "Yes", plus an
-       "I'm Already On The List" shortcut. Both paths reveal a
-       "Continue to the Celebration" button.
-       ============================================================ */
-    const nameInput = $("#rsvpName");
-    const rsvpYesBtn = $("#rsvpYes");
-    const rsvpMaybeBtn = $("#rsvpMaybe");
-    const rsvpAlreadyBtn = $("#rsvpAlready");
-    const rsvpResponse = $("#rsvpResponse");
-    const rsvpContinue = $("#rsvpContinue");
     const rsvpContinueBtn = $("#rsvpContinueBtn");
-
-    function refreshYesState() {
-      const hasName = nameInput.value.trim().length > 0;
-      rsvpYesBtn.disabled = !hasName;
-    }
-    nameInput.addEventListener("input", refreshYesState);
-    refreshYesState();
-
-    function showRsvpResponse(text) {
-      rsvpResponse.hidden = false;
-      rsvpResponse.textContent = text;
-    }
-    function revealContinue() {
-      rsvpContinue.hidden = false;
-    }
-    function resetRsvp() {
-      nameInput.value = "";
-      refreshYesState();
-      rsvpResponse.hidden = true;
-      rsvpResponse.textContent = "";
-      rsvpContinue.hidden = true;
-    }
-
-    rsvpYesBtn.addEventListener("click", (e) => {
-      const name = nameInput.value.trim();
-      if (!name) return;
-      const rect = e.target.getBoundingClientRect();
-      spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 26);
-      showRsvpResponse(t("rsvp.yesResponse").replace("{name}", name));
-      revealContinue();
-      // RSVP is just an on-screen confirmation for the guest — your
-      // actual guest list stays static in code (see js/main.js "EDIT
-      // YOUR GUEST LIST HERE"), so nothing is saved to a database here.
-    });
-
-    rsvpMaybeBtn.addEventListener("click", () => {
-      const name = nameInput.value.trim();
-      showRsvpResponse(t("rsvp.maybeResponse").replace("{name}", name || (window.AJ_LANG === "fil" ? "kaibigan" : "friend")));
-    });
-
-    rsvpAlreadyBtn.addEventListener("click", () => {
-      showRsvpResponse(t("rsvp.alreadyResponse"));
-      revealContinue();
-    });
-
     rsvpContinueBtn.addEventListener("click", () => showChapter("celebration"));
 
-    /* re-render RSVP confirmation + walls if the visitor switches language */
     document.addEventListener("aj:languagechange", () => {
-      if (!rsvpResponse.hidden && nameInput.value.trim()) {
-        showRsvpResponse(t("rsvp.yesResponse").replace("{name}", nameInput.value.trim()));
-      }
       renderMemories();
       renderMessages();
     });
 
-    /* ============================================================
-       CELEBRATION — MAP LINK + COUNTDOWN
-       ============================================================ */
     $("#mapLink").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(MAP_QUERY);
 
     function updateCountdown() {
@@ -690,9 +427,6 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    /* ============================================================
-       GENERIC DETAIL MODAL (candles / treasures / bills)
-       ============================================================ */
     const detailModal = $("#detailModal");
     function openDetail(kindLabel, item) {
       $("#modalEyebrow").textContent = kindLabel + " " + String(item.number).padStart(2, "0");
@@ -717,12 +451,6 @@
       }
     });
 
-    /* ============================================================
-       18 ROSES / TREASURES / WISHES / BILLS
-       Shared pixel-art card grid. Each card shows one breathing
-       pixel character (two idle frames cross-fading via CSS) with
-       a number tag; clicking opens the name + message modal.
-       ============================================================ */
     function renderPixelGrid(container, data, kindLabel, itemKey, valueLabel) {
       container.innerHTML = "";
       data.forEach((entry, i) => {
@@ -751,35 +479,11 @@
       });
     }
 
-    /* ============================================================
-       BALLROOM SCENE SYSTEM (generic, reusable)
-       Renders a set of characters as free-standing figures placed
-       at fixed spots on a ballroom-style map — a full desktop map
-       image or a stacked 3-part mobile portrait map — instead of a
-       card grid, with idle breathing + tap-to-reveal via the shared
-       detail modal above.
-
-       Only 18 Roses uses this today, but the function itself takes
-       every bit of Roses-specific content as a "scene" config
-       (which container, which map wraps, which position sets, which
-       item art, which label, which dataset) rather than assuming
-       any of it — so a future chapter (Treasures / Wishes / Bills)
-       can register its own scene here later and get the exact same
-       rendering, breathing animation, and resize/orientation
-       behavior for free, with its own characters and names, without
-       this function itself changing. Nothing about 18 Roses'
-       appearance or behavior changes by this refactor alone.
-       ============================================================ */
     function renderBallroomFigures(scene) {
       scene.containerEl.innerHTML = "";
       const isMobile = isMobileBallroomViewport();
       const wrapId = isMobile ? scene.mobileWrapId : scene.desktopWrapId;
       const positions = isMobile ? scene.mobilePositions : scene.desktopPositions;
-      /* The figures container is shared between a scene's desktop and
-         mobile map wraps (they're never both visible at once), so it
-         gets moved into whichever wrap is active before positioning
-         its children — that's what makes its children's percentage
-         left/top resolve against the right image box. */
       const wrapEl = document.getElementById(wrapId);
       if (wrapEl && scene.containerEl.parentElement !== wrapEl) {
         wrapEl.appendChild(scene.containerEl);
@@ -813,10 +517,6 @@
       });
     }
 
-    /* Every ballroom scene on the page registers itself here, so a
-       single resize/orientation listener can keep all of them (just
-       18 Roses for now) in sync with the current desktop/mobile
-       breakpoint instead of each scene wiring up its own listener. */
     const ballroomScenes = [];
     function registerBallroomScene(scene) {
       ballroomScenes.push(scene);
@@ -834,12 +534,6 @@
       data: candlesData
     });
 
-    /* 18 Treasures — same ballroom layout system (same map, same
-       position/collision-tested spots, same container + responsive
-       structure) as 18 Roses above, reusing DESKTOP_ROSE_POSITIONS /
-       MOBILE_ROSE_POSITIONS as the shared position set for both
-       scenes. Its characters and names are its own: treasuresData
-       and the "bag" item art, not anything from candlesData. */
     registerBallroomScene({
       containerEl: $("#treasureGrid"),
       desktopWrapId: "treasuresMapwrapDesktop",
@@ -851,13 +545,6 @@
       data: treasuresData
     });
 
-    /* 18 Wishes & Prayers — same ballroom layout system (same map,
-       same position/collision-tested spots, same container +
-       responsive structure) as 18 Roses / 18 Treasures above, reusing
-       DESKTOP_ROSE_POSITIONS / MOBILE_ROSE_POSITIONS as the shared
-       position set for all three scenes. Its characters and names are
-       its own: wishesData and the "candle" item art, not anything
-       from candlesData or treasuresData. */
     registerBallroomScene({
       containerEl: $("#wishGrid"),
       desktopWrapId: "wishesMapwrapDesktop",
@@ -869,13 +556,6 @@
       data: wishesData
     });
 
-    /* 18 Bills — same ballroom layout system (same map, same
-       position/collision-tested spots, same container + responsive
-       structure) as 18 Roses / 18 Treasures / 18 Wishes & Prayers
-       above, reusing DESKTOP_ROSE_POSITIONS / MOBILE_ROSE_POSITIONS
-       as the shared position set for all four scenes. Its characters
-       and names are its own: billsData and the "cash" item art, not
-       anything from candlesData, treasuresData, or wishesData. */
     registerBallroomScene({
       containerEl: $("#billGrid"),
       desktopWrapId: "billsMapwrapDesktop",
@@ -887,11 +567,6 @@
       data: billsData
     });
 
-    /* Re-render every registered scene if the viewport crosses the
-       desktop/mobile ballroom breakpoint (e.g. rotating a phone, or
-       resizing a browser window) so the correct map + position set
-       is always applied. Skipped when nothing actually changed, so
-       this stays cheap on ordinary resize noise. */
     let lastBallroomIsMobile = isMobileBallroomViewport();
     let ballroomResizeTimer = null;
     window.addEventListener("resize", () => {
@@ -905,21 +580,14 @@
       }, 150);
     });
 
-    /* ============================================================
-       MEMORIES - SHARED STORAGE WALL
-       ============================================================ */
     const memoryWall = $("#memoryWall");
     let memories = [];
-
-    /* localStorage key used as a third persistence tier (after
-       window.storage / api/store.php) so memories survive a page
-       refresh on static hosts where neither is available. */
     const MEM_LOCAL_KEY = "aj-memories-local";
-
+    
     function saveMemoriesLocally(arr) {
       try {
         localStorage.setItem(MEM_LOCAL_KEY, JSON.stringify(arr));
-      } catch (e) { /* quota exceeded or unavailable - silent */ }
+      } catch (e) {  }
     }
     function loadMemoriesLocally() {
       try {
@@ -930,11 +598,6 @@
       }
     }
 
-    /* --- Pagination: 5 cols x ~3 rows desktop, 4x3 tablet, 2x3 mobile
-       (matches the .memory-wall grid breakpoints in css/style.css:
-       >900px=5 cols, 641-900px=4 cols, <=640px=2 cols). Ordering is
-       always the array's own order (i.e. submission order) — pages
-       just slice that array, nothing is ever re-sorted. */
     const memoryPagination = $("#memoryPagination");
     const memoryPrevBtn = $("#memoryPrevBtn");
     const memoryNextBtn = $("#memoryNextBtn");
@@ -986,7 +649,7 @@
       if (items.length === 0) return;
 
       const cols = getMemoryColumns();
-      /* Reset locked height if switching device breakpoints (e.g. desktop to cellphone) */
+
       if (cols !== currentLockedColumns) {
         currentLockedColumns = cols;
         maxWallMinHeight = 0;
@@ -1001,13 +664,10 @@
       const rowGap = parseFloat(gridStyle.rowGap || gridStyle.gap || "16") || 16;
       const padTop = parseFloat(gridStyle.paddingTop || "0") || 0;
       const padBot = parseFloat(gridStyle.paddingBottom || "14") || 14;
-
-      /* 2 full rows height for current device size + rowGap + grid padding + 5px extra */
       const twoRowHeight = (itemHeight * 2) + rowGap + padTop + padBot + 5;
       const actualHeight = memoryWall.offsetHeight + 5;
       const calculatedHeight = Math.ceil(Math.max(twoRowHeight, actualHeight));
 
-      /* Store maximum height for current device size so pagination pages never shrink */
       if (calculatedHeight > maxWallMinHeight) {
         maxWallMinHeight = calculatedHeight;
       }
@@ -1015,10 +675,6 @@
       memoryWallWrapper.style.minHeight = maxWallMinHeight + "px";
     }
 
-    /* Paints whatever memoryPage currently points at. highlightNew
-       animates + scrolls the very last memory in (only meaningful
-       when that memory falls on the currently-painted page, i.e.
-       right after a fresh submission jumps to the last page). */
     function paintMemoryPage(highlightNew) {
       memoryWall.innerHTML = "";
       if (memories.length === 0) {
@@ -1034,7 +690,7 @@
       let enteringFig = null;
 
       pageItems.forEach((m, i) => {
-        const isNew = !!highlightNew && !reduceMotion && (start + i === memories.length - 1);
+        const isNew = !!highlightNew && !reduceMotion && (start + i === 0);
         const fig = buildMemoryFigure(m, isNew);
         if (isNew) enteringFig = fig;
         memoryWall.appendChild(fig);
@@ -1064,16 +720,10 @@
       }
     }
 
-    /* opts.gotoLastPage - jump to the page holding the newest memory
-       opts.highlightNew  - animate + scroll that newest memory in
-       opts.transition    - crossfade instead of swapping instantly
-         (used for Previous/Next; skipped for the very first paint,
-         language changes, and resize-driven column changes, all of
-         which should update in place without a flourish) */
     function renderMemories(opts) {
       opts = opts || {};
-      if (opts.gotoLastPage) {
-        memoryPage = Math.max(1, Math.ceil(memories.length / getMemoryPageSize()) || 1);
+      if (opts.gotoFirstPage) {
+        memoryPage = 1;
       }
       if (opts.transition && !reduceMotion) {
         memoryWall.classList.add("is-transitioning");
@@ -1097,10 +747,6 @@
       renderMemories({ transition: true });
     });
 
-    /* Re-paint (no transition, just a clean re-layout) if the
-       viewport crosses a column-count breakpoint, e.g. rotating a
-       phone or resizing a window, mirroring the debounced-resize
-       pattern already used for the ballroom scenes above. */
     let lastMemoryColumns = getMemoryColumns();
     let memoryResizeTimer = null;
     window.addEventListener("resize", () => {
@@ -1119,11 +765,12 @@
     });
 
     async function loadMemories() {
+      
       if (window.MemoryUploadService && typeof window.MemoryUploadService.fetchMemories === "function") {
         const remoteData = await window.MemoryUploadService.fetchMemories();
         if (Array.isArray(remoteData)) {
           memories = remoteData;
-          renderMemories();
+          renderMemories({ gotoFirstPage: true });
           return;
         }
       }
@@ -1133,14 +780,10 @@
       } else {
         memories = loadMemoriesLocally();
       }
-      renderMemories();
+      renderMemories({ gotoFirstPage: true });
     }
     loadMemories();
 
-    /* QR code linking to the standalone guest-submission page
-       (guest.html), which uses this exact same shared storage layer
-       (js/storage.js) so anything a guest submits by scanning it
-       lands on this wall too. */
     function initMemoryQr() {
       const codeEl = $("#memoryQrCode");
       const linkEl = $("#memoryQrLink");
@@ -1159,12 +802,9 @@
             correctLevel: QRCode.CorrectLevel.M
           });
           return;
-        } catch (e) { /* fall through to link-only fallback below */ }
+        } catch (e) {  }
       }
-      /* QR library didn't load (e.g. offline venue wifi blocking the
-         CDN) - the plain tappable link still works, just without a
-         scannable code, so hide the empty code box rather than show
-         a blank square. */
+    
       codeEl.hidden = true;
     }
     initMemoryQr();
@@ -1275,7 +915,7 @@
         photoPreviewImage.src = previewUrl;
         photoPreview.hidden = false;
       } catch (e) {
-        /* silent fallback if preview fails */
+        
       }
     });
 
@@ -1312,8 +952,8 @@
         }
         const res = await window.MemoryUploadService.uploadMemory({ name, caption, file });
         if (res && res.success && res.memory) {
-          memories = memories.concat(res.memory);
-          renderMemories({ gotoLastPage: true, transition: true, highlightNew: true });
+          memories = [res.memory].concat(memories);
+          renderMemories({ gotoFirstPage: true, transition: true, highlightNew: true });
           status.textContent = t("memories.successMsg") || "Memory added \u2014 thank you!";
           uploadTimer = setTimeout(() => {
             uploadTimer = null;
@@ -1329,9 +969,6 @@
       }
     });
 
-    /* ============================================================
-       MESSAGES - SHARED STORAGE GUESTBOOK (with pagination + notepad modal)
-       ============================================================ */
     const messageWall = $("#messageWall");
     const messagePagination = $("#messagePagination");
     const msgPrevBtn = $("#msgPrevBtn");
@@ -1339,7 +976,7 @@
     const msgPageStatus = $("#msgPageStatus");
     let messages = [];
     let messagePage = 1;
-    const MSG_PAGE_SIZE = 6; /* 2 cols x 3 rows */
+    const MSG_PAGE_SIZE = 6; 
 
     function getMsgTotalPages() {
       return Math.max(1, Math.ceil(messages.length / MSG_PAGE_SIZE));
@@ -1403,14 +1040,14 @@
           return;
         }
       }
-      // Fallback if Supabase isn't reachable/configured yet
+      
       const data = await storageGet("messages", true);
       messages = Array.isArray(data) ? data : [];
       renderMessages();
     }
     loadMessages();
 
-    /* ---- Message notepad modal ---- */
+    
     const messageModal = $("#messageModal");
     const openMessageModalBtn = $("#openMessageModal");
     const messageModalClose = $("#messageModalClose");
@@ -1461,8 +1098,8 @@
         ok = false;
       }
       if (!ok) {
-        // Fallback so the guest still sees their message this visit
-        // even if Supabase couldn't be reached
+        
+        
         messages.unshift({ id: Date.now(), name, text });
         await storageSet("messages", messages, true);
       }
@@ -1473,10 +1110,6 @@
       setTimeout(() => closeMessageModal(), 1400);
     });
 
-
-    /* ============================================================
-       BACKGROUND MUSIC - default ON, auto-start on user interaction
-       ============================================================ */
     const bgMusic = $("#bgMusic");
     const musicToggle = $("#musicToggle");
     const MUSIC_PREF_KEY = "aj-music-pref";
@@ -1533,13 +1166,9 @@
 
     if (musicToggle && bgMusic) {
       setMusicIcon(false);
-      
-      // Attempt play immediately (if browser policy allows)
       if (getMusicPref() !== "off") {
         tryPlayMusic();
       }
-
-      // Attach user gesture listeners so first tap/click anywhere (including language gate) plays music
       document.addEventListener("click", onUserGesture);
       document.addEventListener("touchstart", onUserGesture);
       document.addEventListener("keydown", onUserGesture);
@@ -1549,10 +1178,8 @@
           tryPlayMusic();
         }
       });
-
-      // User manual toggle (override preference)
       musicToggle.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevent document gesture trigger collision
+        e.stopPropagation(); 
         if (bgMusic.paused) {
           bgMusic.play().then(() => {
             setMusicIcon(true);
@@ -1568,9 +1195,6 @@
       });
     }
 
-    /* ============================================================
-       LIGHTBOX
-       ============================================================ */
     let currentLightboxPhoto = null;
     let lightboxStatusTimer = null;
     let lastFocusedBeforeLightbox = null;
@@ -1639,8 +1263,6 @@
       lastFocusedBeforeLightbox = null;
     }
 
-    /* Converts the stored data-URL into a real File so the native
-       share sheet can attach the actual photo (not just a link). */
     async function lightboxPhotoAsFile(m) {
       if (!m || !m.image || !/^data:/.test(m.image)) return null;
       try {
@@ -1659,10 +1281,6 @@
       a.href = currentLightboxPhoto.image;
       a.download = safeFileName(currentLightboxPhoto.name) + ".jpg";
       a.rel = "noopener";
-      /* If the browser ignores the download attribute (notably iOS
-         Safari with data: URLs) this opens the photo in a new tab
-         instead of navigating away from the site, so the guest can
-         still long-press / use the share icon to save it. */
       a.target = "_blank";
       document.body.appendChild(a);
       a.click();
@@ -1674,10 +1292,6 @@
       const m = currentLightboxPhoto;
       const shareTitle = "Aliyah Jasmine — Memory";
       const shareText = m.name + (m.caption ? ": " + m.caption : "");
-
-      /* 1) Best case: share the actual photo file via the native share
-         sheet (this is what lets the guest pick Instagram, Facebook,
-         Messages, etc. with the real image attached). */
       const file = await lightboxPhotoAsFile(m);
       if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
@@ -1685,24 +1299,19 @@
           return;
         } catch (err) {
           if (err && err.name === "AbortError") return;
-          /* fall through to next strategy */
+          
         }
       }
 
-      /* 2) Web Share API without file support: share a link instead. */
       if (navigator.share) {
         try {
           await navigator.share({ title: shareTitle, text: shareText, url: window.location.href });
           return;
         } catch (err) {
           if (err && err.name === "AbortError") return;
-          /* fall through to fallback */
+          
         }
       }
-
-      /* 3) No Web Share support at all: save the photo locally and
-         guide the guest to upload it themselves. Never claim to post
-         directly to Instagram/Facebook or control the OS share sheet. */
       saveCurrentPhoto();
       setLightboxStatus(t("lightbox.shareFallbackMsg") || "Photo saved to your device \u2014 open Instagram or Facebook and upload it from your gallery.");
     }
@@ -1733,7 +1342,6 @@
           }
         });
       }
-      /* Delegate so newly added polaroids work without re-binding */
       if (memoryWall) {
         const activatePolaroid = (fig) => {
           const img = fig.querySelector(".ph");
@@ -1751,7 +1359,6 @@
           if (!fig || !memoryWall.contains(fig)) return;
           activatePolaroid(fig);
         });
-        /* Keyboard activation (Enter / Space) for accessibility */
         memoryWall.addEventListener("keydown", (e) => {
           if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
           const fig = e.target.closest("figure.polaroid");
@@ -1761,12 +1368,26 @@
         });
       }
     }
+    const requestedChapter = new URLSearchParams(window.location.search).get("chapter");
+    if (requestedChapter && chapters.includes(requestedChapter)) {
+      showChapter(requestedChapter);
+    } else {
+      showChapter("invitation");
+      playIntro();
 
-    /* ============================================================
-       INIT
-       ============================================================ */
-    showChapter("invitation");
-    playIntro();
+      setTimeout(() => {
+        const introStuck = getComputedStyle(introStage).opacity === "0";
+        const envelopeStuck = getComputedStyle(envelopeStage).opacity === "0";
+        if (introStuck && envelopeStuck) {
+          introStage.style.opacity = 1;
+          introStage.style.visibility = "visible";
+          $$(".hero-name .line span").forEach((s) => (s.style.transform = "none"));
+          $$(".hero-turns, .intro-details").forEach((el) => (el.style.opacity = 1));
+          $$(".floral-frame .corner").forEach((c) => (c.style.opacity = 0.65));
+          if (introContinue) introContinue.style.opacity = 1;
+        }
+      }, 4000);
+    }
     initLightbox();
   }
 })();
